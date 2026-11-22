@@ -50,8 +50,8 @@ docs/                          Media, estimator, QA, deployment and open-items d
 - **Business facts, credentials, reviews:** `src/content/business.ts`. Every credential has a source and `asOf` date; update both when re-verifying. Add authentic reviews to `reviews` and they appear automatically.
 - **Services copy:** `src/content/services.ts`
 - **Projects:** `src/content/projects.ts`. `location` / `materials` show "Pending confirmation" until filled in.
-- **Family photo:** set `business.familyPhoto` once the photograph is supplied.
-- **Logo:** `src/components/brand/Logo.tsx` holds a *provisional* reconstruction. Replace with the original artwork when received.
+- **Family photo & founder quote:** `business.familyPhoto` and `business.founderQuote`.
+- **Logo:** official artwork in `public/brand/` (light/dark variants), rendered by `src/components/brand/Logo.tsx`.
 
 ## Documentation
 

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FinalCta } from "@/components/home/Sections";
 import { ArrowRight, Play } from "@/components/ui/Icons";
 import { PageHero } from "@/components/ui/PageHero";
-import { projects } from "@/content/projects";
+import { fieldPhotos, projects } from "@/content/projects";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
@@ -19,7 +19,7 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="Projects"
         title="Work you can see from every angle."
-        lede="Real NextGen roofs, filmed by drone. More projects are added as they’re completed."
+        lede="Real NextGen roofs: drone films and photos from the job. More are added as projects are completed."
         image="/media/stills/hip-roof-context.jpg"
         imageAlt="Aerial view of a completed brown shingle hip roof in a residential neighborhood"
         crumbs={[{ href: "/projects", label: "Projects" }]}
@@ -30,9 +30,9 @@ export default function ProjectsPage() {
             <li key={p.slug} data-reveal style={{ ["--reveal-delay" as string]: `${(i % 2) * 100}ms` }} className={i === 0 ? "md:col-span-2" : ""}>
               <Link href={`/projects/${p.slug}`} className="group block">
                 <div className={`zoom-media relative ${i === 0 ? "aspect-[16/9] md:aspect-[21/9]" : "aspect-[16/10]"}`}>
-                  <Image src={p.cover.src} alt={p.cover.alt} fill sizes={i === 0 ? "100vw" : "(min-width:768px) 50vw, 100vw"} className="object-cover" priority={i === 0} />
+                  <Image src={p.cover.src} alt={p.cover.alt} fill sizes={i === 0 ? "100vw" : "(min-width:768px) 50vw, 100vw"} className="object-cover" />
                   <span className="absolute left-4 top-4 inline-flex items-center gap-2 bg-ink/80 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-white backdrop-blur">
-                    <Play className="h-3 w-3" /> Drone film · {p.video.duration}
+                    {p.video ? <><Play className="h-3 w-3" /> Drone film · {p.video.duration}</> : <>Photos · {p.gallery.length}</>}
                   </span>
                 </div>
                 <div className="mt-6 flex items-start justify-between gap-6">
@@ -47,6 +47,21 @@ export default function ProjectsPage() {
             </li>
           ))}
         </ul>
+      </section>
+      <section aria-labelledby="field-h" className="border-t border-line bg-white py-20 sm:py-24">
+        <div className="container-x">
+          <h2 id="field-h" className="display-md">More from the field</h2>
+          <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+            {fieldPhotos.map((f) => (
+              <li key={f.src} data-reveal>
+                <figure>
+                  <div className="relative aspect-[4/3] overflow-hidden"><Image src={f.src} alt={f.alt} fill sizes="(min-width:640px) 50vw, 100vw" className="object-cover" /></div>
+                  <figcaption className="mt-3 text-sm text-steel-2">{f.caption}</figcaption>
+                </figure>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
       <FinalCta title="Want results like these on your roof?" />
     </>

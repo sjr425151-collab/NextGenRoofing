@@ -55,7 +55,11 @@ export function Footer() {
             <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-mist">Contact</h2>
             <address className="mt-5 space-y-3 not-italic">
               <p>{business.legalName}</p>
-              <p className="text-mist">{business.address.city}, {business.address.regionName}</p>
+              <p className="text-mist">
+                {business.address.street ? <>{business.address.street}<br /></> : null}
+                {business.address.city}, {business.address.region} {business.address.postalCode}
+              </p>
+              {business.hours ? <p className="text-mist">{business.hours}</p> : null}
               <p><a className="link-underline" href={`tel:${business.phone.e164}`}>{business.phone.display}</a></p>
             </address>
           </div>

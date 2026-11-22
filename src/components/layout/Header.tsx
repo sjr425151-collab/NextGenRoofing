@@ -87,7 +87,7 @@ export function Header() {
       >
         <div className="container-x flex h-[4.5rem] items-center justify-between gap-3 sm:gap-6 lg:h-20">
           <Link href="/" className="shrink-0">
-            <Logo tone={light ? "light" : "dark"} />
+            <Logo tone={light ? "light" : "dark"} priority />
           </Link>
 
           <nav aria-label="Primary" className={`hidden items-center gap-1 lg:flex ${light ? "text-white" : "text-ink"}`}>

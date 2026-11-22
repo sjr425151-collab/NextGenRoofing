@@ -3,6 +3,7 @@ import AxeBuilder from "@axe-core/playwright";
 
 const PAGES = ["/", "/residential-roofing", "/commercial-roofing", "/roof-repair", "/flat-roofing", "/projects",
   "/projects/full-roof-replacement", "/projects/hip-roof-shingle-installation", "/projects/farmhouse-re-roof",
+  "/projects/gable-roof-replacement-step-by-step", "/projects/gray-hip-roof", "/projects/brown-shingle-ranch", "/projects/charcoal-shingle-roof",
   "/about", "/contact", "/estimate", "/privacy", "/terms"];
 const WIDTHS = [320, 375, 390, 430, 768, 1024, 1440];
 

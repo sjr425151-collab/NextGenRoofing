@@ -24,7 +24,8 @@ export default function ContactPage() {
           </a>
           <dl className="mt-8 space-y-5">
             <div><dt className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Business</dt><dd className="mt-1 font-semibold">{business.legalName}</dd></div>
-            <div><dt className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Based in</dt><dd className="mt-1">{business.address.city}, {business.address.regionName}</dd></div>
+            <div><dt className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Address</dt><dd className="mt-1">{business.address.street}<br />{business.address.city}, {business.address.region} {business.address.postalCode}</dd></div>
+            {business.hours ? <div><dt className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Hours</dt><dd className="mt-1">{business.hours}</dd></div> : null}
             <div><dt className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Credentials</dt>
               <dd className="mt-1 space-y-1">{credentials.map((c) => <p key={c.id}>{c.label}: <span className="font-semibold">{c.value}</span> <span className="text-sm text-steel-2">({c.detail.toLowerCase()}, as of {asOfLabel(c.asOf)})</span></p>)}</dd>
             </div>

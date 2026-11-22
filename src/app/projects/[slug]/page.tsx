@@ -32,7 +32,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
     ["Category", p.category],
     ["Location", p.location],
     ["Materials", p.materials],
-    ["Media", `Drone film (${p.video.duration}) and stills`],
+    ["Media", p.video ? `Drone film (${p.video.duration}) and stills` : `${p.gallery.length} job photo${p.gallery.length === 1 ? "" : "s"}`],
   ];
 
   return (
@@ -45,7 +45,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           description: p.summary,
           creator: { "@id": `${SITE_URL}/#business` },
           image: `${SITE_URL}${p.cover.src}`,
-          video: { "@type": "VideoObject", name: `${p.title} — drone film`, description: p.summary, thumbnailUrl: `${SITE_URL}${p.video.poster}`, contentUrl: `${SITE_URL}${p.video.base}.mp4`, uploadDate: "2026-11-22" },
+          ...(p.video ? { video: { "@type": "VideoObject", name: `${p.title} — drone film`, description: p.summary, thumbnailUrl: `${SITE_URL}${p.video.poster}`, contentUrl: `${SITE_URL}${p.video.base}.mp4`, uploadDate: "2026-11-22" } } : {}),
         }}
       />
       <PageHero eyebrow={p.category} title={p.title} lede={p.summary} image={p.cover.src} imageAlt={p.cover.alt}
@@ -54,8 +54,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <section aria-labelledby="film-h" className="bg-paper py-20 sm:py-28">
         <div className="container-x grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-8">
-            <h2 id="film-h" className="sr-only">Drone film</h2>
-            <ProjectFilm base={p.video.base} poster={p.video.poster} title={p.title} duration={p.video.duration} />
+            <h2 id="film-h" className="sr-only">{p.video ? "Drone film" : "Project photo"}</h2>
+            {p.video ? (
+              <ProjectFilm base={p.video.base} poster={p.video.poster} title={p.title} duration={p.video.duration} />
+            ) : (
+              <div className="relative aspect-[4/3] overflow-hidden bg-ink sm:aspect-video">
+                <Image src={p.cover.src} alt={p.cover.alt} fill sizes="(min-width:1024px) 66vw, 100vw" className="object-cover" />
+              </div>
+            )}
           </div>
           <div className="lg:col-span-4">
             <dl className="border-t border-line">
@@ -77,7 +83,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         <section aria-labelledby="stages-h" className="on-dark bg-ink py-20 text-white sm:py-28">
           <div className="container-x">
             <h2 id="stages-h" className="display-md">Start to finish</h2>
-            <ol className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            <ol className={`mt-12 grid gap-6 sm:grid-cols-2 ${p.stages.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-4"}`}>
               {p.stages.map((s, n) => (
                 <li key={s.label} data-reveal style={{ ["--reveal-delay" as string]: `${n * 90}ms` }}>
                   <div className="relative aspect-[4/3] overflow-hidden">
@@ -95,7 +101,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
       <section aria-labelledby="gallery-h" className="bg-white py-20 sm:py-28">
         <div className="container-x">
           <h2 id="gallery-h" className="display-md">Gallery</h2>
-          <p className="mt-3 text-steel-2">Stills taken from the project’s drone footage.</p>
+          <p className="mt-3 text-steel-2">{p.video ? "Stills taken from the project’s drone footage." : "Photos from the job."}</p>
           <div className="mt-10"><Gallery items={p.gallery} /></div>
         </div>
       </section>

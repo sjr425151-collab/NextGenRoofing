@@ -15,7 +15,7 @@ export default function TermsPage() {
       <h2>Website content</h2>
       <p>Information on this website is provided for general informational purposes. Descriptions of roofing systems and practices are general in nature and may not apply to your specific property. Ratings and credentials are shown as of the date indicated and may change; please verify them with the issuing organization.</p>
       <h2>Project media</h2>
-      <p>Project photographs and video on this site depict work by {business.legalName}. Stills are taken from drone footage and may be color corrected for clarity. No images have been altered to misrepresent workmanship.</p>
+      <p>Project photographs and video on this site depict work by {business.legalName}. Job photos are shown as supplied; stills taken from drone footage may be color corrected for clarity. No images have been altered to misrepresent workmanship.</p>
       <h2>No contract formed</h2>
       <p>Submitting a request through this website does not create a contract. Any roofing work is subject to a separate written agreement.</p>
       <h2>Third-party links</h2>

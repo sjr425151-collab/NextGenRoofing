@@ -2,6 +2,9 @@
 
 ## Sources
 
+**Update (Nov 22, 2026):** the client added the logo sheet, the father-and-son photo, 12 job photos and BBB/Google/Facebook screenshots to the Drive folder. Logo variants were cut from the 2400 px sheet into transparent PNGs (`public/brand/`); photos were auto-oriented, resized to ≤2000 px and stripped of all metadata (no GPS data was present) into `public/media/photos/`. Screenshots were used only to verify facts and are not published.
+
+
 Three recordings from the Google Drive folder “Next Gen Roofing – Project Assets.” No logo files, project photos, family photograph, or BBB/Google screenshots were in that folder (see `OPEN-ITEMS.md`). Facebook could not be accessed from the build environment, so nothing was taken from it.
 
 | File | Container | Video | Duration | Content |

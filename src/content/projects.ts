@@ -11,7 +11,7 @@ export type Project = {
   description: string[];
   location: string | null;
   materials: string | null;
-  video: { base: string; poster: string; duration: string };
+  video?: { base: string; poster: string; duration: string };
   cover: { src: string; alt: string };
   gallery: { src: string; alt: string; caption?: string }[];
   stages?: { label: string; src: string; alt: string }[];
@@ -85,6 +85,83 @@ export const projects: Project[] = [
       { src: "/media/stills/farmhouse-street.jpg", alt: "The farmhouse seen from the street with a NextGen yard sign", caption: "From the street" },
     ],
   },
+];
+
+/* Photo projects from client-supplied job photos (Drive, Nov 22, 2026). Grouped only where
+   the photos clearly show the same property (matching chimney, neighbors, vehicles). */
+projects.push(
+  {
+    slug: "gable-roof-replacement-step-by-step",
+    title: "Gable Roof Replacement, Step by Step",
+    category: "Residential",
+    summary: "Three photos from one job: the old roof stripped to the original plank boards, new sheathing going down, and the finished ridge.",
+    description: [
+      "Older homes are often roofed over wide plank boards with gaps between them. On this replacement the old roofing was removed down to those planks, then the roof was sheathed with new panels to create a solid nailing surface.",
+      "The final photo shows the finished gray shingle roof along the ridge, with the chimney flashed in.",
+    ],
+    location: null,
+    materials: null,
+    cover: { src: "/media/photos/gable-finished-ridge.jpg", alt: "Finished gray shingle roof seen along the ridge toward the chimney" },
+    stages: [
+      { label: "Tear-off", src: "/media/photos/gable-tearoff-deck.jpg", alt: "Old roof removed down to the original spaced plank boards around a brick chimney" },
+      { label: "New decking", src: "/media/photos/gable-new-decking.jpg", alt: "New roof sheathing installed along the ridge with a framing nailer resting on it" },
+      { label: "Finished", src: "/media/photos/gable-finished-ridge.jpg", alt: "Finished gray shingle roof seen along the ridge toward the chimney" },
+    ],
+    gallery: [
+      { src: "/media/photos/gable-tearoff-deck.jpg", alt: "Old roof removed down to the original spaced plank boards around a brick chimney", caption: "Stripped to the original planks" },
+      { src: "/media/photos/gable-new-decking.jpg", alt: "New roof sheathing installed along the ridge with a framing nailer resting on it", caption: "New sheathing" },
+      { src: "/media/photos/gable-finished-ridge.jpg", alt: "Finished gray shingle roof seen along the ridge toward the chimney", caption: "Finished roof" },
+    ],
+  },
+  {
+    slug: "gray-hip-roof",
+    title: "Gray Hip Roof",
+    category: "Residential",
+    summary: "A hip roof finished in gray shingles, photographed from directly above and at an angle.",
+    description: ["A multi-plane hip roof with a chimney and adjoining low-slope sections, shown from directly overhead and from an angle."],
+    location: null,
+    materials: null,
+    cover: { src: "/media/photos/gray-hip-angle.jpg", alt: "Aerial view of a gray shingle hip roof with a chimney" },
+    gallery: [
+      { src: "/media/photos/gray-hip-angle.jpg", alt: "Aerial view of a gray shingle hip roof with a chimney", caption: "Angled view" },
+      { src: "/media/photos/gray-hip-top-down.jpg", alt: "Top-down view of the gray hip roof and its low-slope sections", caption: "From above" },
+    ],
+  },
+  {
+    slug: "brown-shingle-ranch",
+    title: "Brown Shingle Ranch Roof",
+    category: "Residential",
+    summary: "A sprawling ranch roof with several hips and wings, finished in a warm brown shingle.",
+    description: ["Ranch homes with additions combine several roof sections. Each hip and valley here meets cleanly, with vents in a straight line along the main roof."],
+    location: null,
+    materials: null,
+    cover: { src: "/media/photos/brown-ranch-overview.jpg", alt: "Aerial view of a brown shingle ranch roof with several hips" },
+    gallery: [
+      { src: "/media/photos/brown-ranch-overview.jpg", alt: "Aerial view of a brown shingle ranch roof with several hips", caption: "Overview" },
+      { src: "/media/photos/brown-ranch-rear.jpg", alt: "Rear view of the brown shingle roof showing the chimney and connecting wing", caption: "Rear wing" },
+    ],
+  },
+  {
+    slug: "charcoal-shingle-roof",
+    title: "Charcoal Shingle Roof",
+    category: "Residential",
+    summary: "A complex roof with multiple gables and valleys, finished in a dark charcoal shingle.",
+    description: ["Multiple gables, valleys and roof vents across a large two-level home, photographed from three angles after completion."],
+    location: null,
+    materials: null,
+    cover: { src: "/media/photos/pergola-home-side.jpg", alt: "Aerial view of a charcoal shingle roof with several gables beside a pergola" },
+    gallery: [
+      { src: "/media/photos/pergola-home-side.jpg", alt: "Aerial view of a charcoal shingle roof with several gables beside a pergola", caption: "Side view" },
+      { src: "/media/photos/pergola-home-front.jpg", alt: "Front aerial view of the charcoal roof showing its gables and roof vents", caption: "Front" },
+      { src: "/media/photos/pergola-home-top-down.jpg", alt: "Top-down view of the charcoal shingle roof", caption: "From above" },
+    ],
+  },
+);
+
+/** Single photos from other jobs (not grouped because they can't be matched to one property). */
+export const fieldPhotos = [
+  { src: "/media/photos/tearoff-underway.jpg", alt: "Crew tearing off an old roof, with a dumpster in the driveway", caption: "Tear-off underway" },
+  { src: "/media/photos/brick-two-story.jpg", alt: "Two-story brick home with a newly finished dark shingle roof", caption: "Two-story brick home" },
 ];
 
 export const getProject = (slug: string) => projects.find((p) => p.slug === slug);

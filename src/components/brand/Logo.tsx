@@ -1,51 +1,39 @@
-/**
- * PROVISIONAL vector reconstruction of the NextGen roofline mark, traced from
- * the company yard sign visible in the supplied drone footage (three nested
- * gables, central gable window). Replace with the original logo artwork once
- * the client's logo files are supplied — see docs/OPEN-ITEMS.md.
- */
-type Props = { className?: string; title?: string; variant?: "full" | "mark"; tone?: "dark" | "light" };
+/* eslint-disable @next/next/no-img-element */
+import { asset } from "@/lib/paths";
 
-export function LogoMark({ className, title }: { className?: string; title?: string }) {
+/**
+ * Official NextGen Roofing & Construction logo artwork, extracted from the
+ * client's logo sheet (Drive: IMG_0244.png) as transparent PNGs in /public/brand.
+ * "on-light" variants are for light backgrounds, "on-dark" for dark ones.
+ */
+type Tone = "dark" | "light"; // tone = colour of the surrounding UI text: "light" → dark background
+
+export function Logo({ className = "", tone = "dark", priority }: { className?: string; tone?: Tone; priority?: boolean }) {
+  const src = tone === "light" ? "/brand/logo-horizontal-on-dark@2x.png" : "/brand/logo-horizontal-on-light@2x.png";
   return (
-    <svg viewBox="0 0 120 50" className={className} role={title ? "img" : undefined} aria-hidden={title ? undefined : true} aria-label={title}>
-      {title ? <title>{title}</title> : null}
-      <g fill="none" stroke="currentColor" strokeLinejoin="miter" strokeLinecap="butt">
-        {/* side gables (behind) */}
-        <polyline points="3,47 24,25 35.5,37" strokeWidth="5.5" />
-        <polyline points="12.5,47 24,35 29,40.5" strokeWidth="3" />
-        <polyline points="117,47 96,25 84.5,37" strokeWidth="5.5" />
-        <polyline points="107.5,47 96,35 91,40.5" strokeWidth="3" />
-        {/* central gable */}
-        <polyline points="24,47 60,7 96,47" strokeWidth="6.5" />
-        <polyline points="35,47 60,19.5 85,47" strokeWidth="3.5" />
-      </g>
-      <g fill="currentColor">
-        <rect x="56.4" y="30.5" width="3.2" height="3.2" />
-        <rect x="60.4" y="30.5" width="3.2" height="3.2" />
-        <rect x="56.4" y="34.5" width="3.2" height="3.2" />
-        <rect x="60.4" y="34.5" width="3.2" height="3.2" />
-        <circle cx="24" cy="42" r="1.6" />
-        <circle cx="96" cy="42" r="1.6" />
-      </g>
-    </svg>
+    <img
+      src={asset(src)}
+      width={603}
+      height={88}
+      alt="NextGen Roofing & Construction — Raising the Standard"
+      decoding="async"
+      loading={priority ? "eager" : "lazy"}
+      className={`h-8 w-auto xs:h-9 lg:h-10 ${className}`}
+    />
   );
 }
 
-export function Logo({ className, variant = "full", tone = "dark" }: Props) {
-  const fg = tone === "light" ? "text-white" : "text-ink";
-  if (variant === "mark") return <LogoMark className={`${fg} ${className ?? ""}`} title="NextGen Roofing & Construction" />;
+export function LogoMark({ className = "", onDark = true, alt = "" }: { className?: string; onDark?: boolean; alt?: string }) {
   return (
-    <span className={`inline-flex items-center gap-2.5 xs:gap-3 ${fg} ${className ?? ""}`}>
-      <LogoMark className="h-7 w-auto shrink-0 xs:h-8 sm:h-9" />
-      <span className="flex flex-col leading-none">
-        <span className="font-display text-[1rem] font-extrabold tracking-[0.06em] xs:text-[1.15rem] sm:text-[1.3rem]">
-          NEXTGEN
-        </span>
-        <span className={`mt-1 text-[0.5rem] font-semibold tracking-[0.18em] xs:text-[0.56rem] xs:tracking-[0.2em] sm:text-[0.6rem] ${tone === "light" ? "text-mist" : "text-steel-2"}`}>
-          ROOFING &amp; CONSTRUCTION
-        </span>
-      </span>
-    </span>
+    <img
+      src={asset(onDark ? "/brand/mark-on-dark-sm.png" : "/brand/mark-on-light-sm.png")}
+      width={446}
+      height={140}
+      alt={alt}
+      aria-hidden={alt ? undefined : true}
+      decoding="async"
+      loading="lazy"
+      className={`w-auto ${className}`}
+    />
   );
 }

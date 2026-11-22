@@ -1,6 +1,5 @@
 import Image from "@/components/ui/Img";
 import Link from "next/link";
-import { LogoMark } from "@/components/brand/Logo";
 import { RoofEstimator } from "@/components/estimator/RoofEstimator";
 import { ProjectFilm } from "@/components/projects/ProjectFilm";
 import { ArrowRight, ArrowUpRight, Phone, Star } from "@/components/ui/Icons";
@@ -163,18 +162,20 @@ export function EstimatorSection() {
 
 /* 06 — Featured projects */
 export function FeaturedProjects() {
-  const [feature, ...rest] = projects;
+  const feature = projects.find((p) => p.video)!;
+  const video = feature.video!;
+  const rest = projects.filter((p) => p !== feature).slice(0, 4);
   return (
     <section aria-labelledby="projects-h" className="relative border-t border-line bg-white py-24 sm:py-32">
       <div className="container-x">
         <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-          <SectionHeading eyebrow="Featured work" title={<span id="projects-h">Our work, from the air.</span>} lede="Drone footage of real NextGen projects — tear-off to final ridge cap." />
+          <SectionHeading eyebrow="Featured work" title={<span id="projects-h">Our work, from the air.</span>} lede="Drone footage and job photos of real NextGen projects — tear-off to final ridge cap." />
           <Link data-reveal href="/projects" className="btn btn-ghost shrink-0">All projects <ArrowRight className="btn-arrow h-4 w-4" /></Link>
         </div>
 
         <div className="mt-14 grid gap-8 lg:grid-cols-12">
           <div data-reveal className="lg:col-span-8">
-            <ProjectFilm base={feature.video.base} poster={feature.video.poster} title={feature.title} duration={feature.video.duration} />
+            <ProjectFilm base={video.base} poster={video.poster} title={feature.title} duration={video.duration} />
           </div>
           <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="flex flex-col lg:col-span-4">
             <p className="text-xs font-semibold uppercase tracking-[0.18em] text-red-deep">{feature.category}</p>
@@ -236,23 +237,26 @@ export function Story() {
           <Link data-reveal href="/about" className="btn btn-ghost mt-10 text-white">Read our story <ArrowRight className="btn-arrow h-4 w-4" /></Link>
         </div>
         <div className="lg:col-span-6 lg:col-start-7">
-          <figure data-reveal className="relative border border-line-dark p-8 sm:p-12">
-            <LogoMark className="absolute right-8 top-8 h-8 w-auto text-white/15" />
-            <p className="font-display text-[clamp(5rem,14vw,10rem)] font-bold leading-[0.85] tracking-[-0.05em]">30<span className="text-red">+</span></p>
-            <figcaption className="mt-6 max-w-sm text-mist">
-              years {business.family.fatherName} has run {business.family.fatherCompany} — the family business where NextGen’s roots are.
-            </figcaption>
-            <div className="mt-10 grid grid-cols-2 gap-px bg-line-dark">
-              <div className="bg-ink-2 py-5 pr-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-mist">First generation</p>
-                <p className="mt-2 font-semibold">{business.family.fatherCompany}</p>
+          <div className="grid gap-6 sm:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+            {business.familyPhoto ? (
+              <figure data-reveal className="relative">
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <Image src={business.familyPhoto.src} alt={business.familyPhoto.alt} fill sizes="(min-width:1024px) 26vw, (min-width:640px) 50vw, 100vw" className="object-cover" />
+                </div>
+                <figcaption className="mt-3 text-sm text-mist">{business.familyPhoto.caption}</figcaption>
+              </figure>
+            ) : null}
+            <div data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="flex flex-col justify-between gap-8 border border-line-dark p-7">
+              <div>
+                <p className="font-display text-[clamp(4rem,9vw,6rem)] font-bold leading-[0.85] tracking-[-0.05em]">30<span className="text-red">+</span></p>
+                <p className="mt-4 text-sm text-mist">years {business.family.fatherName} has run {business.family.fatherCompany} — the family business where NextGen’s roots are.</p>
               </div>
-              <div className="bg-ink-2 py-5 pl-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-red-bright">Next generation</p>
-                <p className="mt-2 font-semibold">{business.shortName}</p>
-              </div>
+              <blockquote className="border-t border-line-dark pt-6">
+                <p className="leading-relaxed text-white">“{business.founderQuote}”</p>
+                <footer className="mt-3 text-sm text-mist">— {business.founder.name}, founder</footer>
+              </blockquote>
             </div>
-          </figure>
+          </div>
         </div>
       </div>
     </section>

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     "Second-generation residential and commercial roofing in Toledo, Ohio. Roof replacement, repair, and flat roofing systems — EPDM, TPO, torch-down, spray foam and coatings. Free inspections.",
   applicationName: business.shortName,
   formatDetection: { telephone: true },
-  icons: { icon: [{ url: asset("/icon.svg"), type: "image/svg+xml" }], apple: asset("/apple-icon.png") },
+  icons: { icon: [{ url: asset("/favicon-48.png"), sizes: "48x48", type: "image/png" }, { url: asset("/icon.png"), sizes: "512x512", type: "image/png" }], apple: asset("/apple-icon.png") },
   robots: process.env.NEXT_PUBLIC_NOINDEX === "true" ? { index: false, follow: false } : undefined,
 };
 

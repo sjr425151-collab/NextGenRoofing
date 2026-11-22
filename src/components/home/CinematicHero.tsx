@@ -3,8 +3,8 @@
 import { getImageProps } from "next/image";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { LogoMark } from "@/components/brand/Logo";
 import { ArrowRight, Pause, Play } from "@/components/ui/Icons";
+import Image from "@/components/ui/Img";
 import { business } from "@/content/business";
 import { asset } from "@/lib/paths";
 
@@ -283,23 +283,17 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
               </div>
             </div>
             <div className="hidden md:col-span-5 md:block md:pl-6">
-              <ol className="relative space-y-8" aria-label="Family lineage">
-                <span data-lineage-bar aria-hidden className="absolute left-[0.6875rem] top-3 h-[calc(100%-1.5rem)] w-px origin-top bg-ink/25" />
-                <li data-line className="relative pl-10">
-                  <span aria-hidden className="absolute left-0 top-1.5 h-[1.375rem] w-[1.375rem] rounded-full border border-ink/30 bg-paper" />
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-steel-2">First generation · {business.family.fatherYears}</p>
-                  <p className="mt-1 font-display text-xl font-bold">{business.family.fatherCompany}</p>
-                  <p className="mt-1 text-steel-2">{business.family.fatherName}</p>
-                </li>
-                <li data-line className="relative pl-10">
-                  <span aria-hidden className="absolute left-0 top-1.5 flex h-[1.375rem] w-[1.375rem] items-center justify-center rounded-full bg-red">
-                    <LogoMark className="h-2.5 w-auto text-white" />
-                  </span>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-red-deep">Next generation</p>
-                  <p className="mt-1 font-display text-xl font-bold">{business.legalName}</p>
-                  <p className="mt-1 text-steel-2">Residential &amp; commercial roofing, Toledo</p>
-                </li>
-              </ol>
+              {business.familyPhoto ? (
+                <figure data-line className="ml-auto max-w-sm">
+                  <div className="relative aspect-[3/4] max-h-[58vh] overflow-hidden bg-paper-2">
+                    <Image src={business.familyPhoto.src} alt={business.familyPhoto.alt} fill sizes="(min-width: 768px) 24rem, 0px" className="object-cover" />
+                  </div>
+                  <span data-lineage-bar aria-hidden className="mt-4 block h-0.5 w-16 origin-left bg-red" />
+                  <figcaption className="mt-3 text-sm leading-relaxed text-steel-2">
+                    <span className="font-semibold text-ink">{business.founder.name} &amp; {business.family.fatherName}.</span> First generation: {business.family.fatherCompany}. Next generation: NextGen.
+                  </figcaption>
+                </figure>
+              ) : null}
             </div>
           </div>
         </div>

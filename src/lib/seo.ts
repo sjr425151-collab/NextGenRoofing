@@ -23,7 +23,7 @@ export function organizationJsonLd() {
     slogan: business.tagline,
     url: SITE_URL,
     telephone: business.phone.e164,
-    logo: `${SITE_URL}/icon.svg`,
+    logo: `${SITE_URL}/brand/logo-stacked-on-light.png`,
     image: `${SITE_URL}/og.jpg`,
     address: {
       "@type": "PostalAddress",
@@ -34,6 +34,9 @@ export function organizationJsonLd() {
       addressCountry: business.address.country,
     },
     founder: { "@type": "Person", name: business.founder.name },
+    ...(business.hours === "Open 24 hours"
+      ? { openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], opens: "00:00", closes: "23:59" }] }
+      : {}),
     sameAs: [business.links.facebook],
     knowsAbout: ["Residential roofing", "Commercial roofing", "Flat roofing", "EPDM", "TPO", "Modified bitumen", "Spray polyurethane foam roofing", "Roof coatings", "Roof repair"],
   };

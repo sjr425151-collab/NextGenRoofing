@@ -50,9 +50,18 @@ export default function AboutPage() {
         <div className="container-x relative">
           <h2 id="lineage-h" className="sr-only">Two generations</h2>
           {business.familyPhoto ? (
-            <figure data-reveal className="relative mb-16 aspect-[16/9] overflow-hidden">
-              <Image src={business.familyPhoto.src} alt={business.familyPhoto.alt} fill sizes="100vw" className="object-cover" />
-            </figure>
+            <div className="mb-16 grid items-end gap-10 md:grid-cols-12">
+              <figure data-reveal className="md:col-span-5">
+                <div className="relative aspect-[3/4] overflow-hidden">
+                  <Image src={business.familyPhoto.src} alt={business.familyPhoto.alt} fill sizes="(min-width:768px) 40vw, 100vw" className="object-cover" />
+                </div>
+                <figcaption className="mt-3 text-sm text-mist">{business.familyPhoto.caption}</figcaption>
+              </figure>
+              <blockquote data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="md:col-span-6 md:col-start-7">
+                <p className="font-display text-[clamp(1.5rem,1.1rem+1.6vw,2.5rem)] font-semibold leading-snug tracking-tight">“{business.founderQuote}”</p>
+                <footer className="mt-6 text-mist">— {business.founder.name}, founder of NextGen Roofing &amp; Construction</footer>
+              </blockquote>
+            </div>
           ) : null}
           <ol className="grid gap-px bg-line-dark md:grid-cols-2">
             <li data-reveal className="bg-ink p-8 sm:p-12">
@@ -64,7 +73,7 @@ export default function AboutPage() {
             </li>
             <li data-reveal style={{ ["--reveal-delay" as string]: "120ms" }} className="bg-ink-2 p-8 sm:p-12">
               <p className="eyebrow text-red-bright">Next generation</p>
-              <LogoMark className="mt-8 h-[clamp(4rem,10vw,7rem)] w-auto text-white" />
+              <LogoMark className="mt-8 h-[clamp(4rem,10vw,7rem)]" alt="NextGen Roofing & Construction roofline mark" />
               <p className="mt-3 text-mist">{business.tagline}</p>
               <p className="mt-8 font-display text-2xl font-bold">{business.legalName}</p>
               <p className="mt-1 text-mist">Residential &amp; commercial roofing · {business.address.city}, {business.address.regionName}</p>

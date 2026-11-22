@@ -15,24 +15,31 @@ export const business = {
   phone: { display: "(440) 228-5933", e164: "+14402285933" },
   /** Business email for display is not yet supplied. */
   email: null as string | null,
+  /** As listed on the Google Business Profile (screenshot supplied Nov 22, 2026). */
   address: {
-    /** Street address not supplied; only city/state are verified. */
-    street: null as string | null,
+    street: "4035 Parrakeet Ave" as string | null,
     city: "Toledo",
     region: "OH",
     regionName: "Ohio",
-    postalCode: null as string | null,
+    postalCode: "43612" as string | null,
     country: "US",
   },
-  /** Hours not supplied — hidden until confirmed. */
-  hours: null as string | null,
+  /** As listed on the Google Business Profile. */
+  hours: "Open 24 hours" as string | null,
   /** Service area beyond Toledo is not verified — do not list towns. */
   serviceAreaNote: "Based in Toledo, Ohio",
   founder: {
     name: "Ryan Cole",
   },
-  /** Father-and-son photograph — supplied by client but not yet delivered to this project. */
-  familyPhoto: null as { src: string; alt: string } | null,
+  /** Supplied by the client; per NextGen's Facebook post, taken at a commercial job they had just completed. */
+  familyPhoto: {
+    src: "/media/photos/family-ryan-and-frank.jpg",
+    alt: "Ryan Cole in a red NextGen hoodie standing beside his father, Frank, on a white commercial roof",
+    caption: "Ryan Cole and his father, Frank, on a commercial roof they had just completed.",
+  } as { src: string; alt: string; caption: string } | null,
+  /** Verbatim from Ryan Cole's public Facebook post introducing the company. */
+  founderQuote:
+    "Growing up in the industry, I learned firsthand what it means to work hard, treat customers right, and stand behind every roof installed.",
   family: {
     fatherName: "Frank",
     fatherCompany: "C&S Roofing & Construction",
@@ -67,7 +74,7 @@ export const credentials: Credential[] = [
     label: "BBB Accredited",
     value: "A",
     detail: "BBB rating · Accredited since Oct 8, 2025",
-    source: "Client-supplied BBB screenshot",
+    source: "BBB profile screenshot supplied by client",
     asOf: "2026-11-22",
     href: business.links.bbb,
   },
@@ -76,7 +83,7 @@ export const credentials: Credential[] = [
     label: "Google Rating",
     value: "5.0",
     detail: "From 3 Google reviews",
-    source: "Client-supplied Google Business Profile screenshot",
+    source: "Google Business Profile screenshot supplied by client",
     asOf: "2026-11-22",
     href: business.links.google,
   },
