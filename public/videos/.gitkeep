@@ -1,0 +1,7 @@
+public/
+├── images/
+│   └── projects/
+└── videos/
+    ├── hero-drone.mp4
+    ├── residential-project-01.mp4
+    └── residential-project-02.mp4
