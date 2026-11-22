@@ -273,3 +273,7 @@
 @keyframes cue { 0% { transform: translateY(-100%); } 100% { transform: translateY(260%); } }
 .cine-cue { animation: cue 1.8s var(--ease-in-out-quart) infinite; }
 .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+/* Headlines: transform-only entrance so they paint immediately (keeps LCP fast). */
+@keyframes cine-rise { from { transform: translateY(22px); } to { transform: none; } }
+.js .cine-rise { animation: cine-rise 1.2s var(--ease-out-expo) backwards; animation-delay: var(--d, 0ms); }

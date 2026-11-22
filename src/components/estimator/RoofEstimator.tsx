@@ -61,7 +61,7 @@ function initialState(preset?: { sector?: Sector; scope?: Scope }): State {
 
 const money = (n: number) => "$" + n.toLocaleString("en-US");
 
-export function RoofEstimator({ preset, headingLevel = 2 }: { preset?: { sector?: Sector; scope?: Scope }; headingLevel?: 2 | 3 }) {
+export function RoofEstimator({ preset, stepHeadingLevel = 3 }: { preset?: { sector?: Sector; scope?: Scope }; stepHeadingLevel?: 2 | 3 }) {
   const [s, setS] = useState<State>(() => initialState(preset));
   const [step, setStep] = useState(0);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -73,7 +73,8 @@ export function RoofEstimator({ preset, headingLevel = 2 }: { preset?: { sector?
   const [submitted, setSubmitted] = useState(false);
   const stepHeading = useRef<HTMLHeadingElement>(null);
   const firstRender = useRef(true);
-  const H = (headingLevel === 2 ? "h3" : "h4") as "h3";
+  const H = (stepHeadingLevel === 2 ? "h2" : "h3") as "h3";
+  const H4 = (stepHeadingLevel === 2 ? "h3" : "h4") as "h4";
 
   const set = <K extends keyof State>(k: K, v: State[K]) => {
     setS((p) => ({ ...p, [k]: v }));
@@ -339,18 +340,18 @@ export function RoofEstimator({ preset, headingLevel = 2 }: { preset?: { sector?
               )}
             </div>
 
-            <ProjectSummary s={s} />
+            <ProjectSummary s={s} H4={H4} />
 
             {result.kind === "estimate" ? (
               <div className="grid gap-8 md:grid-cols-2">
                 <div>
-                  <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Assumptions</h4>
+                  <H4 className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Assumptions</H4>
                   <ul className="mt-3 space-y-2 text-sm leading-relaxed">
                     {result.assumptions.map((a) => <li key={a} className="flex gap-2"><span aria-hidden className="mt-2 h-1 w-1 shrink-0 bg-ink" />{a}</li>)}
                   </ul>
                 </div>
                 <div>
-                  <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">What can change the price</h4>
+                  <H4 className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">What can change the price</H4>
                   <ul className="mt-3 space-y-2 text-sm leading-relaxed">
                     {result.variationFactors.map((a) => <li key={a} className="flex gap-2"><span aria-hidden className="mt-2 h-1 w-1 shrink-0 bg-red" />{a}</li>)}
                   </ul>
@@ -361,7 +362,7 @@ export function RoofEstimator({ preset, headingLevel = 2 }: { preset?: { sector?
             <p className="border-t border-line pt-5 text-xs leading-relaxed text-steel-2">{disclaimer}</p>
 
             <div className="border-t-2 border-ink pt-8">
-              <h4 className="font-display text-2xl font-bold tracking-tight">{submitted ? "" : "Request your free inspection"}</h4>
+              <H4 className="font-display text-2xl font-bold tracking-tight">{submitted ? "" : "Request your free inspection"}</H4>
               {!submitted ? <p className="mt-2 max-w-xl text-steel-2">We’ll look at the roof in person and give you an estimate based on actual measurements. Your selections above are included with your request.</p> : null}
               <div className="mt-6">
                 <LeadForm
@@ -440,7 +441,7 @@ function EstimateReveal({ result, demo }: { result: Extract<EstimateResult, { ki
   );
 }
 
-function ProjectSummary({ s }: { s: State }) {
+function ProjectSummary({ s, H4 }: { s: State; H4: "h4" }) {
   const rows: [string, string][] = [
     ["Property", s.sector === "commercial" ? "Commercial" : "Residential"],
     ["Work", s.scope === "new" ? "New installation" : s.scope === "repair" ? "Repair" : "Replacement"],
@@ -453,7 +454,7 @@ function ProjectSummary({ s }: { s: State }) {
   if (s.issues.length) rows.push(["Reported", s.issues.join(", ")]);
   return (
     <div>
-      <h4 className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Your selections</h4>
+      <H4 className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Your selections</H4>
       <dl className="mt-3 grid grid-cols-2 gap-px border border-line bg-line sm:grid-cols-4">
         {rows.map(([k, v]) => (
           <div key={k} className="bg-white p-4">

@@ -10,6 +10,9 @@ import { business } from "@/content/business";
 export type HeroConcept = "video" | "stills";
 
 const SCENES = ["Arrival", "Craft", "Legacy"] as const;
+const GABLE_START = "polygon(50% 70%, 50% 70%, 50% 70%, 50% 70%, 50% 70%)"; // collapsed to a point
+const GABLE_MID = "polygon(50% 52%, 64% 66%, 64% 84%, 36% 84%, 36% 66%)";
+const GABLE_END = "polygon(50% -60%, 160% 50%, 160% 160%, -60% 160%, -60% 50%)";
 
 /** Art-directed poster/still: desktop 16:9 and mobile portrait crops, AVIF/WebP via next/image. */
 function ArtImage({
@@ -27,7 +30,7 @@ function ArtImage({
       {m ? <source media="(max-width: 767px)" srcSet={m.srcSet} sizes="100vw" /> : null}
       <source media="(min-width: 768px)" srcSet={d.srcSet} sizes="100vw" />
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img {...d} alt={alt} className={`absolute inset-0 h-full w-full object-cover ${className ?? ""}`} />
+      <img {...d} alt={alt} fetchPriority={priority ? "high" : undefined} className={`absolute inset-0 h-full w-full object-cover ${className ?? ""}`} />
     </picture>
   );
 }
@@ -141,16 +144,13 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
           .to(q("[data-scroll-cue]"), { opacity: 0, duration: 0.05 }, 0.02);
 
         // Scene 2 ← in
-        if (concept === "stills") {
-          tl.fromTo(
-            q("[data-layer=b]"),
-            { clipPath: "polygon(50% 62%, 62% 74%, 62% 86%, 38% 86%, 38% 74%)" },
-            { clipPath: "polygon(50% -60%, 160% 50%, 160% 160%, -60% 160%, -60% 50%)", duration: 0.24, ease: "power2.inOut" },
-            0.22,
-          );
-        } else {
-          tl.fromTo(q("[data-layer=b]"), { opacity: 0 }, { opacity: 1, duration: 0.12 }, 0.28);
-        }
+        // Gable-shaped reveal, drawn from the roofline in the NextGen mark.
+        tl.fromTo(
+          q("[data-layer=b]"),
+          { clipPath: GABLE_START },
+          { clipPath: GABLE_MID, duration: 0.07, ease: "power2.out" },
+          0.2,
+        ).to(q("[data-layer=b]"), { clipPath: GABLE_END, duration: 0.2, ease: "power2.inOut" }, 0.27);
         tl.fromTo(q("[data-layer=b] [data-inner]"), { scale: 1.18 }, { scale: 1, duration: 0.42 }, 0.26)
           .fromTo(q("[data-s2] > *"), { yPercent: 50, opacity: 0 }, { yPercent: 0, opacity: 1, stagger: 0.03, duration: 0.12 }, 0.38)
           .to(q("[data-s2] > *"), { yPercent: -30, opacity: 0, stagger: 0.02, duration: 0.08 }, 0.6);
@@ -203,7 +203,7 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
         </div>
 
         {/* ── Layer B: craftsmanship */}
-        <div data-layer="b" className="absolute inset-0 opacity-100" style={{ clipPath: concept === "stills" ? "polygon(50% 62%, 62% 74%, 62% 86%, 38% 86%, 38% 74%)" : undefined, opacity: concept === "video" ? 0 : undefined }}>
+        <div data-layer="b" className="absolute inset-0" style={{ clipPath: GABLE_START }}>
           <div data-inner className="absolute inset-0 will-change-transform">
             {concept === "video" ? (
               <>
@@ -236,7 +236,7 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
             <p className="eyebrow cine-in text-white/80" style={{ ["--d" as string]: "100ms" }}>
               Toledo, Ohio · Residential &amp; Commercial Roofing
             </p>
-            <h1 className="display-xl cine-in mt-5" style={{ ["--d" as string]: "180ms" }}>
+            <h1 className="display-xl cine-rise mt-5" style={{ ["--d" as string]: "180ms" }}>
               Raising the<br /> Standard.
             </h1>
             <p className="lede cine-in mt-6 max-w-xl text-white/85" style={{ ["--d" as string]: "300ms" }}>
@@ -269,11 +269,11 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
         {/* ── Layer C / Scene 3: heritage */}
         <div data-layer="c" className="cine-scene3 absolute inset-0 bg-paper text-ink" style={{ clipPath: "inset(100% 0% 0% 0%)" }}>
           <div className="arch-lines pointer-events-none absolute inset-0 opacity-70" aria-hidden />
-          <div data-s3 className="container-x relative grid h-full content-center gap-10 py-24 md:grid-cols-12 md:gap-12">
+          <div data-s3 className="container-x relative grid h-full content-center gap-10 pb-10 pt-20 md:grid-cols-12 md:gap-12 md:py-24">
             <div className="md:col-span-7">
               <p data-line className="eyebrow text-red-deep">Second generation</p>
-              <h2 data-line className="display-lg mt-5">A legacy built<br /> to last.</h2>
-              <p data-line className="lede mt-6 max-w-xl text-steel-2">
+              <h2 data-line className="display-lg mt-4 md:mt-5">A legacy built<br /> to last.</h2>
+              <p data-line className="lede mt-5 max-w-xl text-steel-2 md:mt-6">
                 NextGen’s founder learned roofing from his father, {business.family.fatherName}, who has run {business.family.fatherCompany} for {business.family.fatherYears}. The name says the rest: the next generation of that work, under a new company.
               </p>
               <div data-line className="mt-8 flex flex-wrap gap-3">
@@ -281,7 +281,7 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
                 <Link href="#estimator" className="btn btn-ghost">Start an estimate</Link>
               </div>
             </div>
-            <div className="md:col-span-5 md:pl-6">
+            <div className="hidden md:col-span-5 md:block md:pl-6">
               <ol className="relative space-y-8" aria-label="Family lineage">
                 <span data-lineage-bar aria-hidden className="absolute left-[0.6875rem] top-3 h-[calc(100%-1.5rem)] w-px origin-top bg-ink/25" />
                 <li data-line className="relative pl-10">

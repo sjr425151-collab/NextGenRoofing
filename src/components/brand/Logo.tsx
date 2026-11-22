@@ -36,13 +36,13 @@ export function Logo({ className, variant = "full", tone = "dark" }: Props) {
   const fg = tone === "light" ? "text-white" : "text-ink";
   if (variant === "mark") return <LogoMark className={`${fg} ${className ?? ""}`} title="NextGen Roofing & Construction" />;
   return (
-    <span className={`inline-flex items-center gap-3 ${fg} ${className ?? ""}`}>
-      <LogoMark className="h-8 w-auto shrink-0 sm:h-9" />
+    <span className={`inline-flex items-center gap-2.5 xs:gap-3 ${fg} ${className ?? ""}`}>
+      <LogoMark className="h-7 w-auto shrink-0 xs:h-8 sm:h-9" />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-[1.15rem] font-extrabold tracking-[0.06em] sm:text-[1.3rem]">
+        <span className="font-display text-[1rem] font-extrabold tracking-[0.06em] xs:text-[1.15rem] sm:text-[1.3rem]">
           NEXTGEN
         </span>
-        <span className={`mt-1 text-[0.56rem] font-semibold tracking-[0.2em] sm:text-[0.6rem] ${tone === "light" ? "text-mist" : "text-steel-2"}`}>
+        <span className={`mt-1 text-[0.5rem] font-semibold tracking-[0.18em] xs:text-[0.56rem] xs:tracking-[0.2em] sm:text-[0.6rem] ${tone === "light" ? "text-mist" : "text-steel-2"}`}>
           ROOFING &amp; CONSTRUCTION
         </span>
       </span>

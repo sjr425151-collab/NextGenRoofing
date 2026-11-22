@@ -47,7 +47,7 @@ loop() { # src start len xfade out_base
   local off; off=$(python3 -c "print(round($L-2*$X,3))")
   local fc="[0]trim=start=$ss:duration=$L,setpts=PTS-STARTPTS,split[a][b];[a]trim=start=$X,setpts=PTS-STARTPTS[body];[b]trim=end=$X,setpts=PTS-STARTPTS[head];[body][head]xfade=transition=fade:duration=$X:offset=$off,format=yuv420p"
   # Desktop 1280x720
-  ffmpeg -v error -y -i "$src" -filter_complex "$fc,scale=1280:720:flags=lanczos" $X264 -crf 22 -r 30 "$OUT/video/$base-1280.mp4"
+  ffmpeg -v error -y -i "$src" -filter_complex "$fc,scale=1280:720:flags=lanczos" $X264 -crf 24 -r 30 "$OUT/video/$base-1280.mp4"
   ffmpeg -v error -y -i "$src" -filter_complex "$fc,scale=1280:720:flags=lanczos" $AV1 -crf 36 -r 30 "$OUT/video/$base-1280.webm"
   # Mobile portrait crop (center), 540x720
   ffmpeg -v error -y -i "$src" -filter_complex "$fc,crop=552:736:(iw-552)/2:0,scale=540:720:flags=lanczos" $X264 -crf 24 -r 30 "$OUT/video/$base-540.mp4"
@@ -63,7 +63,7 @@ loop "$RAW/master_d3.mkv" 10.4 6.0 0.8 hero-detail   # ridge-cap close-up, overc
 
 # 3) Project showcase films (full authentic edits, 720p)
 film() { # src ss dur base
-  ffmpeg -v error -y -ss $2 -t $3 -i "$1" -vf "scale=1280:720:flags=lanczos" $X264 -crf 23 -r 30 "$OUT/video/$4.mp4"
+  ffmpeg -v error -y -ss $2 -t $3 -i "$1" -vf "scale=1280:720:flags=lanczos" $X264 -crf 26 -r 30 "$OUT/video/$4.mp4"
   ffmpeg -v error -y -ss $2 -t $3 -i "$1" -vf "scale=1280:720:flags=lanczos" $AV1 -crf 38 -r 30 "$OUT/video/$4.webm"
 }
 film "$RAW/master_d1.mkv" 0 22 project-hip-roof

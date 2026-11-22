@@ -20,7 +20,7 @@ export function PageHero({
 }) {
   return (
     <section className="on-dark relative isolate flex min-h-[78svh] items-end overflow-hidden bg-ink pb-16 pt-36 text-white sm:min-h-[72vh] sm:pb-20">
-      <Image src={image} alt={imageAlt} fill priority sizes="100vw" quality={75} className="cine-kenburns -z-20 object-cover" />
+      <Image src={image} alt={imageAlt} fill priority fetchPriority="high" loading="eager" sizes="100vw" quality={70} className="cine-kenburns -z-20 object-cover" />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(17_18_20/0.55)_0%,rgb(17_18_20/0.25)_35%,rgb(17_18_20/0.9)_100%)]" aria-hidden />
       <div className="arch-lines-dark absolute inset-0 -z-10" aria-hidden />
       <div className="container-x">
@@ -38,7 +38,7 @@ export function PageHero({
           </nav>
         ) : null}
         <p className="eyebrow cine-in text-white/80">{eyebrow}</p>
-        <h1 className="display-lg cine-in mt-5 max-w-4xl" style={{ ["--d" as string]: "100ms" }}>{title}</h1>
+        <h1 className="display-lg cine-rise mt-5 max-w-4xl" style={{ ["--d" as string]: "100ms" }}>{title}</h1>
         {lede ? <p className="lede cine-in mt-6 max-w-2xl text-white/85" style={{ ["--d" as string]: "200ms" }}>{lede}</p> : null}
         {children ? <div className="cine-in mt-9" style={{ ["--d" as string]: "300ms" }}>{children}</div> : null}
       </div>

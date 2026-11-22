@@ -23,7 +23,7 @@ export default function EstimatePage() {
             <a href={`tel:${business.phone.e164}`} className="inline-flex items-center gap-2 font-semibold"><Phone /> Or call {business.phone.display}</a>
           </div>
         </div>
-        <div className="mt-12"><RoofEstimator /></div>
+        <div className="mt-12"><RoofEstimator stepHeadingLevel={2} /></div>
       </div>
     </section>
   );

@@ -10,7 +10,7 @@ import { SITE_URL, business } from "@/content/business";
 import { organizationJsonLd } from "@/lib/seo";
 
 const manrope = localFont({ src: "../fonts/manrope.woff2", variable: "--font-manrope", weight: "200 800", display: "swap", preload: true });
-const inter = localFont({ src: "../fonts/inter.woff2", variable: "--font-inter", weight: "100 900", display: "swap", preload: true });
+const inter = localFont({ src: "../fonts/inter.woff2", variable: "--font-inter", weight: "100 900", display: "swap", preload: false, adjustFontFallback: "Arial" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

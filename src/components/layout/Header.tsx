@@ -85,7 +85,7 @@ export function Header() {
           hidden && !menuOpen ? "-translate-y-full" : "translate-y-0"
         } ${solid ? "bg-paper/92 shadow-[0_1px_0_var(--color-line)] backdrop-blur-md" : "bg-transparent"} ${light ? "on-dark" : ""}`}
       >
-        <div className="container-x flex h-[4.5rem] items-center justify-between gap-6 lg:h-20">
+        <div className="container-x flex h-[4.5rem] items-center justify-between gap-3 sm:gap-6 lg:h-20">
           <Link href="/" className="shrink-0">
             <Logo tone={light ? "light" : "dark"} />
           </Link>
@@ -134,7 +134,7 @@ export function Header() {
             <button
               type="button"
               onClick={() => setMenuOpen(true)}
-              className={`inline-flex h-11 w-11 items-center justify-center lg:hidden ${light ? "text-white" : "text-ink"}`}
+              className={`-mr-2 inline-flex h-11 w-11 shrink-0 items-center justify-center lg:hidden ${light ? "text-white" : "text-ink"}`}
               aria-label="Open menu"
               aria-haspopup="dialog"
               aria-expanded={menuOpen}
