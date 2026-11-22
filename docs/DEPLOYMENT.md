@@ -72,6 +72,47 @@ The livefiberconnect.com server must forward `/preview/nextgenroofing` and every
 
 **Moving to the client's domain later:** remove `NEXT_PUBLIC_BASE_PATH`, set `NEXT_PUBLIC_SITE_URL` to the new domain, unset `NEXT_PUBLIC_NOINDEX` and `ALLOW_DEMO_PRICING`, then `npm run build && npm start`. No code changes are needed.
 
+## Render (livefiberconnect.com is hosted on Render)
+
+### 1 · Create the NextGen service
+
+Render Dashboard → **New → Blueprint** → choose `sjr425151-collab/NextGenRoofing`, branch `claude/nextgen-roofing-website-k8ccjl`. `render.yaml` defines a Node web service `nextgen-roofing-preview`:
+
+| Setting | Value |
+| --- | --- |
+| Build | `npm ci && npm run build:render` |
+| Start | `npm run start:preview -- -p $PORT -H 0.0.0.0` |
+| Health check | `/preview/nextgenroofing` |
+| Node | 22 (`NODE_VERSION`, `.node-version`) |
+| Secrets (dashboard) | `LEAD_SHEET_WEBHOOK_URL`, `LEAD_SHEET_TOKEN` |
+
+Measured in a clean clone: build peak ≈ 440 MB (largest process), runtime ≈ 120 MB. **Plan:** Free works but sleeps after inactivity (first visit after idle is slow); Starter (paid) stays awake. If a build is killed for memory, move the service to a larger plan.
+
+The service then answers at `https://nextgen-roofing-preview.onrender.com/preview/nextgenroofing`.
+
+### 2 · Forward the path from livefiberconnect.com
+
+The prefix must be **kept** when forwarding (the app expects `/preview/nextgenroofing/...`).
+
+- **If livefiberconnect.com is a Render *Static Site*:** Settings → Redirects/Rewrites → add a **Rewrite**
+  `Source: /preview/nextgenroofing/*` → `Destination: https://nextgen-roofing-preview.onrender.com/preview/nextgenroofing/*`.
+  Also add the exact path `/preview/nextgenroofing` (no slash) the same way. Place these rules above any catch-all rule.
+- **If it's a Render *Web Service* built with Next.js:** in its `next.config` add
+  ```js
+  async rewrites() { return { beforeFiles: [
+    { source: "/preview/nextgenroofing", destination: "https://nextgen-roofing-preview.onrender.com/preview/nextgenroofing" },
+    { source: "/preview/nextgenroofing/:path*", destination: "https://nextgen-roofing-preview.onrender.com/preview/nextgenroofing/:path*" },
+  ] }; }
+  ```
+- **If it's an Express/Node web service:**
+  ```js
+  const { createProxyMiddleware } = require("http-proxy-middleware");
+  app.use(createProxyMiddleware({ pathFilter: "/preview/nextgenroofing", target: "https://nextgen-roofing-preview.onrender.com", changeOrigin: true }));
+  ```
+  (register before other routes; `pathFilter` keeps the prefix).
+
+Verify: `https://livefiberconnect.com/preview/nextgenroofing` loads with images and video, and the estimator returns a range.
+
 ## Preview / client review deployment (generic)
 
 ```

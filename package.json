@@ -13,7 +13,8 @@
     "media": "scripts/media/process-footage.sh",
     "build:preview": "node scripts/with-env.cjs .env.preview build",
     "start:preview": "node scripts/with-env.cjs .env.preview start",
-    "check:preview": "BASE=http://localhost:${PORT:-3000}/preview/nextgenroofing node scripts/check-subpath.cjs"
+    "check:preview": "BASE=http://localhost:${PORT:-3000}/preview/nextgenroofing node scripts/check-subpath.cjs",
+    "build:render": "NEXT_BUILD_CPUS=1 NODE_OPTIONS=--max-old-space-size=320 node scripts/with-env.cjs .env.preview build --webpack"
   },
   "engines": {
     "node": ">=20.9"

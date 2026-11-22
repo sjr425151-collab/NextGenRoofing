@@ -1,0 +1,26 @@
+# Render Blueprint — NextGen Roofing preview
+# Served at https://livefiberconnect.com/preview/nextgenroofing via the livefiberconnect.com
+# service forwarding that path here (see docs/DEPLOYMENT.md → "Render").
+services:
+  - type: web
+    name: nextgen-roofing-preview
+    runtime: node
+    plan: free            # free tier sleeps when idle (slow first load); "starter" stays awake — owner's choice
+    branch: claude/nextgen-roofing-website-k8ccjl
+    # build:render = webpack, 1 worker, capped heap (~440 MB peak measured) to fit 512 MB instances
+    buildCommand: npm ci && npm run build:render
+    startCommand: npm run start:preview -- -p $PORT -H 0.0.0.0
+    healthCheckPath: /preview/nextgenroofing
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: LEAD_SINKS
+        value: google-sheet
+      # Secrets: set in the Render dashboard (never committed)
+      - key: LEAD_SHEET_WEBHOOK_URL
+        sync: false
+      - key: LEAD_SHEET_TOKEN
+        sync: false

@@ -14,6 +14,8 @@ const noindex = process.env.NEXT_PUBLIC_NOINDEX === "true";
 const nextConfig: NextConfig = {
   basePath: basePath || undefined,
   poweredByHeader: false,
+  // Low-memory hosts (e.g. Render free tier, 512 MB): NEXT_BUILD_CPUS=1 builds with a single worker.
+  ...(process.env.NEXT_BUILD_CPUS ? { experimental: { cpus: Number(process.env.NEXT_BUILD_CPUS), workerThreads: false } } : {}),
   reactStrictMode: true,
   images: {
     formats: ["image/avif", "image/webp"],
