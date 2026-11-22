@@ -1,45 +1,142 @@
 {
-  "$comment": "DEMONSTRATION VALUES ONLY. These are placeholder unit rates for development and are NOT NextGen pricing. In production the estimator shows an inspection-required result until status is set to \"approved\" with rates supplied by NextGen.",
-  "version": "demo-2026-11-22",
-  "status": "demonstration",
+  "$comment": "BALLPARK RATES. Approved by the client (Nov 22, 2026) for ballpark estimates only: NextGen has no fixed price list, so the estimator shows a rough range and tells visitors to call for exact rates. Values are generic Toledo-area market ballparks, not NextGen quotes. Edit freely; bump version when you do.",
+  "version": "ballpark-2026-11-22",
+  "status": "ballpark",
   "enabled": true,
-  "disclaimer": "This preliminary estimate is for informational purposes only and is not a binding quote. Final pricing is subject to roof measurements, inspection, material selection, site conditions, and confirmation by NextGen Roofing & Construction.",
+  "disclaimer": "This ballpark estimate is for informational purposes only and is not a quote. Final pricing is subject to roof measurements, inspection, material selection, site conditions, and confirmation by NextGen Roofing & Construction. For exact rates, call (440) 228-5933.",
   "residential": {
     "materials": {
-      "architectural": { "label": "Architectural asphalt shingle", "materialPerSqft": 2.1, "laborPerSqft": 2.4 },
-      "premium": { "label": "Premium / designer shingle", "materialPerSqft": 3.4, "laborPerSqft": 2.8 },
-      "metal": { "label": "Standing-seam metal", "materialPerSqft": 7.5, "laborPerSqft": 5.0 },
-      "low-slope": { "label": "Low-slope membrane", "materialPerSqft": 4.2, "laborPerSqft": 3.3 }
+      "architectural": {
+        "label": "Architectural asphalt shingle",
+        "materialPerSqft": 2.1,
+        "laborPerSqft": 2.4
+      },
+      "premium": {
+        "label": "Premium / designer shingle",
+        "materialPerSqft": 3.4,
+        "laborPerSqft": 2.8
+      },
+      "metal": {
+        "label": "Standing-seam metal",
+        "materialPerSqft": 7.5,
+        "laborPerSqft": 5.0
+      },
+      "low-slope": {
+        "label": "Low-slope membrane",
+        "materialPerSqft": 4.2,
+        "laborPerSqft": 3.3
+      }
     },
-    "pitchFactor": { "low": 1.06, "medium": 1.12, "steep": 1.25, "very-steep": 1.42 },
-    "pitchLaborFactor": { "low": 1.0, "medium": 1.0, "steep": 1.12, "very-steep": 1.3 },
-    "storiesFactor": { "1": 1.0, "2": 1.05, "3": 1.12 },
-    "complexityFactor": { "simple": 1.0, "moderate": 1.1, "complex": 1.22 },
-    "tearOffPerSqft": { "none": 0, "one": 0.85, "two": 1.35 },
+    "pitchFactor": {
+      "low": 1.06,
+      "medium": 1.12,
+      "steep": 1.25,
+      "very-steep": 1.42
+    },
+    "pitchLaborFactor": {
+      "low": 1.0,
+      "medium": 1.0,
+      "steep": 1.12,
+      "very-steep": 1.3
+    },
+    "storiesFactor": {
+      "1": 1.0,
+      "2": 1.05,
+      "3": 1.12
+    },
+    "complexityFactor": {
+      "simple": 1.0,
+      "moderate": 1.1,
+      "complex": 1.22
+    },
+    "tearOffPerSqft": {
+      "none": 0,
+      "one": 0.85,
+      "two": 1.35
+    },
     "overhangFactor": 1.1,
-    "homeSizeBuckets": { "s": 1200, "m": 2000, "l": 3000, "xl": 4000 },
+    "homeSizeBuckets": {
+      "s": 1200,
+      "m": 2000,
+      "l": 3000,
+      "xl": 4000
+    },
     "allowance": 650,
     "minimumJob": 6500
   },
   "commercial": {
     "systems": {
-      "epdm": { "label": "EPDM membrane", "materialPerSqft": 3.5, "laborPerSqft": 3.0 },
-      "tpo": { "label": "TPO membrane", "materialPerSqft": 3.8, "laborPerSqft": 3.2 },
-      "self-adhering": { "label": "Self-adhering modified bitumen", "materialPerSqft": 4.0, "laborPerSqft": 3.2 },
-      "torch-down": { "label": "Torch-down modified bitumen", "materialPerSqft": 4.2, "laborPerSqft": 3.6 },
-      "spf": { "label": "Spray polyurethane foam", "materialPerSqft": 3.6, "laborPerSqft": 2.6, "requiresSoundSubstrate": true },
-      "coating": { "label": "Roof coating system", "materialPerSqft": 1.6, "laborPerSqft": 1.4, "requiresSoundSubstrate": true, "noTearOff": true }
+      "epdm": {
+        "label": "EPDM membrane",
+        "materialPerSqft": 3.5,
+        "laborPerSqft": 3.0
+      },
+      "tpo": {
+        "label": "TPO membrane",
+        "materialPerSqft": 3.8,
+        "laborPerSqft": 3.2
+      },
+      "self-adhering": {
+        "label": "Self-adhering modified bitumen",
+        "materialPerSqft": 4.0,
+        "laborPerSqft": 3.2
+      },
+      "torch-down": {
+        "label": "Torch-down modified bitumen",
+        "materialPerSqft": 4.2,
+        "laborPerSqft": 3.6
+      },
+      "spf": {
+        "label": "Spray polyurethane foam",
+        "materialPerSqft": 3.6,
+        "laborPerSqft": 2.6,
+        "requiresSoundSubstrate": true
+      },
+      "coating": {
+        "label": "Roof coating system",
+        "materialPerSqft": 1.6,
+        "laborPerSqft": 1.4,
+        "requiresSoundSubstrate": true,
+        "noTearOff": true
+      }
     },
-    "unsureSystems": ["epdm", "tpo", "torch-down"],
-    "slopeFactor": { "flat": 1.0, "low-slope": 1.04 },
-    "accessFactor": { "easy": 1.0, "moderate": 1.07, "difficult": 1.15 },
-    "complexityFactor": { "low": 1.0, "moderate": 1.08, "high": 1.18 },
+    "unsureSystems": [
+      "epdm",
+      "tpo",
+      "torch-down"
+    ],
+    "slopeFactor": {
+      "flat": 1.0,
+      "low-slope": 1.04
+    },
+    "accessFactor": {
+      "easy": 1.0,
+      "moderate": 1.07,
+      "difficult": 1.15
+    },
+    "complexityFactor": {
+      "low": 1.0,
+      "moderate": 1.08,
+      "high": 1.18
+    },
     "tearOffPerSqft": 1.5,
-    "buildingSizeBuckets": { "s": 3000, "m": 10000, "l": 25000 },
+    "buildingSizeBuckets": {
+      "s": 3000,
+      "m": 10000,
+      "l": 25000
+    },
     "maxAutoEstimateSqft": 40000,
     "allowance": 1500,
     "minimumJob": 9000
   },
-  "geographic": { "default": 1.0, "zipPrefixes": {} },
-  "range": { "baseSpread": 0.1, "perUnknown": 0.05, "maxSpread": 0.3, "roundTo": 100 }
+  "geographic": {
+    "default": 1.0,
+    "zipPrefixes": {}
+  },
+  "range": {
+    "baseSpread": 0.1,
+    "perUnknown": 0.05,
+    "maxSpread": 0.3,
+    "roundTo": 100
+  }
 }

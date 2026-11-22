@@ -23,7 +23,7 @@ See `.env.example` for the full annotated list. Minimum for launch:
 | `PRICING_CONFIG_*` | For live pricing | Otherwise production shows inspection-only results |
 | `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` | Recommended | Free Cloudflare bot protection |
 
-**Recommended lead setup:** `LEAD_SINKS=email,webhook` — email notifies the owner immediately, the webhook keeps a durable record in a spreadsheet/CRM. A lead counts as delivered if at least one succeeds; failures are logged without personal data.
+**Chosen lead setup:** `LEAD_SINKS=google-sheet` — a Google Apps Script on the client's “Lead form requests - Website” sheet appends each lead and emails the NextGen Gmail (free; see `integrations/google-sheets/README.md`). Email via Resend and generic webhooks remain available. A lead counts as delivered if at least one succeeds; failures are logged without personal data.
 
 ## Webhook payload
 
@@ -40,7 +40,7 @@ With `LEAD_WEBHOOK_SECRET` set, verify `x-nextgen-signature: sha256=HMAC_SHA256(
 - [ ] Resolve every item in `OPEN-ITEMS.md` marked **Blocking**
 - [ ] Set `NEXT_PUBLIC_SITE_URL` to the final domain; connect DNS and TLS
 - [ ] Configure and **test** lead delivery end-to-end on the production URL (submit a real request and confirm it arrives)
-- [ ] Approved pricing loaded (`status: "approved"`) — or deliberately launch inspection-only
+- [x] Pricing decision: ballpark ranges + “call for exact rates” (`status: "ballpark"`)
 - [ ] Turnstile keys configured
 - [ ] Re-verify BBB and Google ratings; update `asOf` dates in `src/content/business.ts`
 - [ ] Replace the provisional logo with original artwork
@@ -56,7 +56,6 @@ The preview runs the same app under a sub-path. Settings live in `.env.preview` 
 NEXT_PUBLIC_BASE_PATH=/preview/nextgenroofing
 NEXT_PUBLIC_SITE_URL=https://livefiberconnect.com/preview/nextgenroofing
 NEXT_PUBLIC_NOINDEX=true        # meta robots + X-Robots-Tag: noindex
-ALLOW_DEMO_PRICING=true         # estimator shows demo-labeled ranges
 ```
 
 ```bash
@@ -66,7 +65,7 @@ npm run start:preview -- -p 3000  # always use these paired scripts
 npm run check:preview           # crawls every page; fails on any broken request
 ```
 
-Secrets (lead delivery, Turnstile) go in the host's environment, not in `.env.preview`.
+Secrets go in the host's environment, not in `.env.preview`: `LEAD_SINKS=google-sheet`, `LEAD_SHEET_WEBHOOK_URL`, `LEAD_SHEET_TOKEN` (see `integrations/google-sheets/README.md`), plus optional Turnstile keys.
 Without a lead sink, preview forms honestly say “Online requests are temporarily unavailable — please call.”
 
 The livefiberconnect.com server must forward `/preview/nextgenroofing` and everything under it to this app **without stripping the prefix** (e.g. nginx `location /preview/nextgenroofing { proxy_pass http://127.0.0.1:3000; }` — note: no trailing slash on `proxy_pass`). On Vercel, deploy this repo as its own project and add a rewrite in the livefiberconnect.com project: `/preview/nextgenroofing/:path*` → `https://<this-project>.vercel.app/preview/nextgenroofing/:path*`.

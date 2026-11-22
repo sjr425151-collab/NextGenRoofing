@@ -47,10 +47,11 @@ Every estimate returns the list of assumptions applied (shown to the visitor and
 | `demonstration` | development | `demo` | Range + amber “Demonstration pricing — not NextGen rates” badge |
 | `demonstration` | production | `inspection-only` | No price; free-inspection request |
 | `demonstration` | production + `ALLOW_DEMO_PRICING=true` | `demo` | Range + demo badge (client review deploys only) |
+| `ballpark` | any | `live` | **Current.** Range labelled “Ballpark estimate” with a “Call for exact rates” button |
 | `approved` | any | `live` | Range |
 | any | `ESTIMATOR_MODE=inspection-only` | `inspection-only` | No price |
 
-`config/pricing.json` currently holds **placeholder demonstration rates** — they are not NextGen pricing and the production gate prevents them from being shown as such.
+**Client decision (Nov 22, 2026):** NextGen has no fixed price list; the estimator shows ballpark ranges only and directs visitors to call for exact rates. `config/pricing.json` is set to `"status": "ballpark"`. Its rates are generic Toledo-area market ballparks chosen during development (e.g. architectural shingle replacement ≈ $5.35/sq ft installed incl. one-layer tear-off; EPDM ≈ $6.50/sq ft + $1.50 tear-off) — recommend Ryan sanity-check a few results and adjust if they run high or low.
 
 ## Administration (pricing changes)
 

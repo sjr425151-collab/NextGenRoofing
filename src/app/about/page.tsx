@@ -11,7 +11,7 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "About NextGen — A Second-Generation Roofing Company",
-  description: `NextGen Roofing & Construction is a second-generation roofing company in Toledo, Ohio. The founder learned the trade from his father, ${business.family.fatherName}, of ${business.family.fatherCompany}.`,
+  description: `NextGen Roofing & Construction is a second-generation roofing company in Toledo, Ohio. Founder ${business.founder.name} learned the trade from his father, ${business.family.fatherName}, of ${business.family.fatherCompany}.`,
   path: "/about",
   image: "/media/stills/farmhouse-street.jpg",
 });
@@ -35,7 +35,7 @@ export default function AboutPage() {
           </div>
           <div className="space-y-6 text-[1.0625rem] leading-relaxed text-steel-2 lg:col-span-6 lg:col-start-7">
             <p data-reveal>
-              NextGen’s founder learned roofing from his father, <strong className="text-ink">{business.family.fatherName}</strong>, who has operated <strong className="text-ink">{business.family.fatherCompany}</strong> for {business.family.fatherYears}. Years of working alongside him meant learning the trade the way it should be learned: on real jobs, with someone who cared how they turned out.
+              NextGen founder <strong className="text-ink">{business.founder.name}</strong> learned roofing from his father, <strong className="text-ink">{business.family.fatherName}</strong>, who has operated <strong className="text-ink">{business.family.fatherCompany}</strong> for {business.family.fatherYears}. Years of working alongside him meant learning the trade the way it should be learned: on real jobs, with someone who cared how they turned out.
             </p>
             <p data-reveal>
               NextGen Roofing &amp; Construction LLC is a separate, newer company — and its name is deliberate. It stands for the next generation of that family tradition: the same craftsmanship, work ethic and customer service, brought to homeowners and commercial property owners in the Toledo area.

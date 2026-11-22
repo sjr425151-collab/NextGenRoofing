@@ -68,7 +68,7 @@ export function Intro() {
           </h2>
           <div data-reveal style={{ ["--reveal-delay" as string]: "160ms" }} className="mt-8 max-w-xl space-y-5 text-[1.0625rem] leading-relaxed text-steel-2">
             <p>
-              The name is the story. NextGen’s founder grew up in roofing, learning the trade from his father at {business.family.fatherCompany}.
+              The name is the story. Founder {business.founder.name} grew up in roofing, learning the trade from his father at {business.family.fatherCompany}.
               NextGen carries that work ethic into a new company — serving homeowners and commercial property owners in and around Toledo.
             </p>
             <p>From a single repair to a complete commercial membrane system, every roof gets the same attention to the details that keep water out.</p>
@@ -144,8 +144,8 @@ export function EstimatorSection() {
       <div className="container-x grid gap-12 lg:grid-cols-12">
         <div className="lg:col-span-4">
           <div className="lg:sticky lg:top-28">
-            <SectionHeading eyebrow="Roof estimator" title={<span id="estimator-h">See a preliminary price range.</span>}
-              lede="Three short steps. No contact details needed to see your range — then request a free inspection for a real number." />
+            <SectionHeading eyebrow="Roof estimator" title={<span id="estimator-h">Get a ballpark price in minutes.</span>}
+              lede="Three short steps, no contact details needed. Then call or request a free inspection for exact rates." />
             <ul data-reveal className="mt-8 space-y-3 text-sm text-steel-2">
               <li className="flex gap-3"><span className="font-semibold text-ink">01</span> Project type and material</li>
               <li className="flex gap-3"><span className="font-semibold text-ink">02</span> Size, pitch and complexity — “I’m not sure” is always an option</li>
@@ -229,7 +229,7 @@ export function Story() {
           <h2 id="story-h" data-reveal style={{ ["--reveal-delay" as string]: "80ms" }} className="display-lg mt-5">A legacy built to last.</h2>
           <div data-reveal style={{ ["--reveal-delay" as string]: "160ms" }} className="mt-8 space-y-5 text-[1.0625rem] leading-relaxed text-mist">
             <p>
-              Before there was NextGen, there was {business.family.fatherName}. He has run {business.family.fatherCompany} for {business.family.fatherYears}, and it’s where NextGen’s founder learned the trade — on real roofs, the right way.
+              Before there was NextGen, there was {business.family.fatherName}. He has run {business.family.fatherCompany} for {business.family.fatherYears}, and it’s where {business.founder.name} learned the trade — on real roofs, the right way.
             </p>
             <p>NextGen Roofing &amp; Construction is the next generation of that work: a new company carrying forward the same craftsmanship, work ethic and respect for the customer.</p>
           </div>

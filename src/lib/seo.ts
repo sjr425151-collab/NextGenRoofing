@@ -33,6 +33,7 @@ export function organizationJsonLd() {
       ...(business.address.postalCode ? { postalCode: business.address.postalCode } : {}),
       addressCountry: business.address.country,
     },
+    founder: { "@type": "Person", name: business.founder.name },
     sameAs: [business.links.facebook],
     knowsAbout: ["Residential roofing", "Commercial roofing", "Flat roofing", "EPDM", "TPO", "Modified bitumen", "Spray polyurethane foam roofing", "Roof coatings", "Roof repair"],
   };

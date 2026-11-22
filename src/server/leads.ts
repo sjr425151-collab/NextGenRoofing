@@ -25,6 +25,26 @@ const fileSink = (dir: string): Sink => ({
   },
 });
 
+/**
+ * Google Apps Script web app (Sheet + Gmail notification). Apps Script cannot
+ * read request headers and returns HTTP 200 even on script errors, so the
+ * shared token travels in the body and success requires `{ ok: true }`.
+ */
+const appsScriptSink = (url: string, token: string): Sink => ({
+  name: "google-sheet",
+  async deliver(lead) {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ token, lead, text: renderText(lead) }),
+      redirect: "follow",
+      signal: AbortSignal.timeout(15_000),
+    });
+    const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+    if (!res.ok || !data?.ok) throw new Error(`apps script rejected lead: ${res.status} ${data?.error ?? "non-JSON response"}`);
+  },
+});
+
 const webhookSink = (url: string, secret?: string): Sink => ({
   name: "webhook",
   async deliver(lead) {
@@ -68,6 +88,8 @@ export function configuredSinks(): Sink[] {
       // requires an explicit, persistent directory.
       const dir = process.env.LEAD_FILE_DIR ?? (isProd ? "" : path.join(process.cwd(), "data"));
       if (dir) sinks.push(fileSink(dir));
+    } else if (name === "google-sheet" && process.env.LEAD_SHEET_WEBHOOK_URL && process.env.LEAD_SHEET_TOKEN) {
+      sinks.push(appsScriptSink(process.env.LEAD_SHEET_WEBHOOK_URL, process.env.LEAD_SHEET_TOKEN));
     } else if (name === "webhook" && process.env.LEAD_WEBHOOK_URL) {
       sinks.push(webhookSink(process.env.LEAD_WEBHOOK_URL, process.env.LEAD_WEBHOOK_SECRET));
     } else if (name === "email" && process.env.RESEND_API_KEY && process.env.LEAD_EMAIL_TO && process.env.LEAD_EMAIL_FROM) {

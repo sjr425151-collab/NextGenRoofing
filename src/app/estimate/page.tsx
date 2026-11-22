@@ -5,7 +5,7 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
   title: "Roof Estimate Calculator",
-  description: "Get a preliminary roof replacement price range for your home or commercial building in three short steps, then request a free inspection from NextGen Roofing & Construction.",
+  description: "Get a ballpark roof replacement price range for your home or commercial building in three short steps, then request a free inspection from NextGen Roofing & Construction.",
   path: "/estimate",
 });
 
@@ -17,7 +17,7 @@ export default function EstimatePage() {
           <div className="lg:col-span-8">
             <p className="eyebrow text-red-deep">Roof estimator</p>
             <h1 className="display-lg mt-5">What will my roof cost?</h1>
-            <p className="lede mt-6 max-w-2xl text-steel-2">Answer a few questions to see a preliminary price range — no contact details required. Every answer has an “I’m not sure” option.</p>
+            <p className="lede mt-6 max-w-2xl text-steel-2">Answer a few questions to see a ballpark price range — no contact details required. For exact rates, call or request a free inspection. Every answer has an “I’m not sure” option.</p>
           </div>
           <div className="lg:col-span-4 lg:text-right">
             <a href={`tel:${business.phone.e164}`} className="inline-flex items-center gap-2 font-semibold"><Phone /> Or call {business.phone.display}</a>

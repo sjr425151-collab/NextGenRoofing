@@ -275,7 +275,7 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
               <p data-line className="eyebrow text-red-deep">Second generation</p>
               <h2 data-line className="display-lg mt-4 md:mt-5">A legacy built<br /> to last.</h2>
               <p data-line className="lede mt-5 max-w-xl text-steel-2 md:mt-6">
-                NextGen’s founder learned roofing from his father, {business.family.fatherName}, who has run {business.family.fatherCompany} for {business.family.fatherYears}. The name says the rest: the next generation of that work, under a new company.
+                NextGen founder {business.founder.name} learned roofing from his father, {business.family.fatherName}, who has run {business.family.fatherCompany} for {business.family.fatherYears}. The name says the rest: the next generation of that work, under a new company.
               </p>
               <div data-line className="mt-8 flex flex-wrap gap-3">
                 <Link href="/about" className="btn btn-dark">Our story <ArrowRight className="btn-arrow h-4 w-4" /></Link>

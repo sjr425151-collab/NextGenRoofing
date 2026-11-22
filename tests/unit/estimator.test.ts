@@ -25,7 +25,7 @@ describe("residential", () => {
     // (2.1 + 2.4) * 1 + 0.85 = 5.35/sqft × 2000 + 650 = 11,350 → ±10%
     expect(r.low).toBe(10200);
     expect(r.high).toBe(12500);
-    expect(r.pricingStatus).toBe("demonstration");
+    expect(r.pricingStatus).toBe("ballpark");
   });
 
   it("does not treat home living area as roof area", () => {

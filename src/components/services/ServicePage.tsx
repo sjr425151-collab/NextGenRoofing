@@ -52,7 +52,7 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
       />
       <PageHero eyebrow={s.eyebrow} title={s.headline} lede={s.lede} image={s.image} imageAlt={s.imageAlt} crumbs={[{ href: `/${slug}`, label: s.title }]}>
         <div className="flex flex-col gap-3 xs:flex-row">
-          <Link href="#estimate" className="btn">Get a preliminary estimate <ArrowRight className="btn-arrow h-4 w-4" /></Link>
+          <Link href="#estimate" className="btn">Get a ballpark estimate <ArrowRight className="btn-arrow h-4 w-4" /></Link>
           <a href={`tel:${business.phone.e164}`} className="btn btn-ghost text-white"><Phone /> {business.phone.display}</a>
         </div>
       </PageHero>
@@ -113,7 +113,7 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
       {/* Estimator */}
       <section id="estimate" aria-labelledby="est-h" className="scroll-mt-20 border-t border-line bg-paper py-24 sm:py-28">
         <div className="container-x">
-          <SectionHeading eyebrow="Roof estimator" title={<span id="est-h">Start with a preliminary range</span>} lede="No contact details needed to see your range." />
+          <SectionHeading eyebrow="Roof estimator" title={<span id="est-h">Start with a ballpark price</span>} lede="No contact details needed to see your range." />
           <div className="mt-12"><RoofEstimator preset={s.estimatorPreset} /></div>
         </div>
       </section>

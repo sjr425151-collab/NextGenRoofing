@@ -37,6 +37,6 @@ export function resolveMode(cfg: PricingConfig): EstimatorMode {
   const allowDemo = !isProd || process.env.ALLOW_DEMO_PRICING === "true";
 
   if (requested === "inspection-only") return "inspection-only";
-  if (cfg.status === "approved") return "live";
+  if (cfg.status === "approved" || cfg.status === "ballpark") return "live";
   return allowDemo ? "demo" : "inspection-only";
 }

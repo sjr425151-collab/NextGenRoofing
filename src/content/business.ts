@@ -29,8 +29,7 @@ export const business = {
   /** Service area beyond Toledo is not verified — do not list towns. */
   serviceAreaNote: "Based in Toledo, Ohio",
   founder: {
-    /** Founder's name has not been supplied. */
-    name: null as string | null,
+    name: "Ryan Cole",
   },
   /** Father-and-son photograph — supplied by client but not yet delivered to this project. */
   familyPhoto: null as { src: string; alt: string } | null,

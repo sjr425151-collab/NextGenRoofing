@@ -329,7 +329,7 @@ export function RoofEstimator({ preset, stepHeadingLevel = 3 }: { preset?: { sec
           <div className="space-y-10">
             <div aria-live="polite">
               <H ref={stepHeading} tabIndex={-1} className="font-display text-2xl font-bold tracking-tight outline-none sm:text-3xl">
-                {result.kind === "estimate" ? "Your preliminary estimate" : "Let’s look at it in person"}
+                {result.kind === "estimate" ? (result.pricingStatus === "ballpark" ? "Your ballpark estimate" : "Your preliminary estimate") : "Let’s look at it in person"}
               </H>
               {result.kind === "estimate" ? (
                 <EstimateReveal result={result} demo={mode === "demo"} />
@@ -364,7 +364,7 @@ export function RoofEstimator({ preset, stepHeadingLevel = 3 }: { preset?: { sec
 
             <div className="border-t-2 border-ink pt-8">
               <H4 className="font-display text-2xl font-bold tracking-tight">{submitted ? "" : "Request your free inspection"}</H4>
-              {!submitted ? <p className="mt-2 max-w-xl text-steel-2">We’ll look at the roof in person and give you an estimate based on actual measurements. Your selections above are included with your request.</p> : null}
+              {!submitted ? <p className="mt-2 max-w-xl text-steel-2">We’ll look at the roof in person and give you exact pricing based on actual measurements. Your selections above are included with your request.</p> : null}
               <div className="mt-6">
                 <LeadForm
                   source="estimator"
@@ -416,7 +416,7 @@ function EstimateReveal({ result, demo }: { result: Extract<EstimateResult, { ki
       <div className="arch-lines-dark pointer-events-none absolute inset-0" aria-hidden />
       <div className="relative">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="eyebrow text-mist">Estimated project range</p>
+          <p className="eyebrow text-mist">{result.pricingStatus === "ballpark" ? "Ballpark project range" : "Estimated project range"}</p>
           {demo ? (
             <span className="inline-flex items-center gap-2 border border-amber-300/50 bg-amber-300/10 px-3 py-1 text-xs font-semibold text-amber-200">
               Demonstration pricing — not NextGen rates
@@ -435,8 +435,12 @@ function EstimateReveal({ result, demo }: { result: Extract<EstimateResult, { ki
         <p className="mt-4 text-sm text-mist">
           Based on roughly {result.roofAreaSqft.low === result.roofAreaSqft.high
             ? `${result.roofAreaSqft.low.toLocaleString()} sq ft`
-            : `${result.roofAreaSqft.low.toLocaleString()}–${result.roofAreaSqft.high.toLocaleString()} sq ft`} of roof surface. A preliminary range, not a quote.
+            : `${result.roofAreaSqft.low.toLocaleString()}–${result.roofAreaSqft.high.toLocaleString()} sq ft`} of roof surface. A ballpark range, not a quote.
         </p>
+        <div className="mt-6 flex flex-col gap-3 border-t border-white/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-white/90">For exact rates, talk to NextGen directly.</p>
+          <a href={`tel:${business.phone.e164}`} className="btn btn-ghost text-white"><Phone /> Call {business.phone.display}</a>
+        </div>
       </div>
     </div>
   );

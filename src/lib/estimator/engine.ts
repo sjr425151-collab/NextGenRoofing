@@ -10,7 +10,7 @@ import type { CommercialInput, EstimateInput, EstimateResult, ResidentialInput }
 
 export type PricingConfig = {
   version: string;
-  status: "demonstration" | "approved";
+  status: "demonstration" | "ballpark" | "approved";
   enabled: boolean;
   disclaimer: string;
   residential: {

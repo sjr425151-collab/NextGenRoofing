@@ -53,13 +53,13 @@ export type EstimateResult =
       roofAreaSqft: { low: number; high: number };
       assumptions: string[];
       variationFactors: string[];
-      pricingStatus: "demonstration" | "approved";
+      pricingStatus: "demonstration" | "ballpark" | "approved";
       pricingVersion: string;
     }
   | {
       kind: "inspection";
       reason: string;
       assumptions: string[];
-      pricingStatus: "demonstration" | "approved" | "disabled";
+      pricingStatus: "demonstration" | "ballpark" | "approved" | "disabled";
       pricingVersion: string;
     };

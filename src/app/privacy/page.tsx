@@ -10,7 +10,7 @@ export default function PrivacyPage() {
       <p>This policy explains what information {business.legalName} (“NextGen,” “we”) collects through this website and how it is used.</p>
       <h2>Information you give us</h2>
       <p>When you request an inspection, contact us, or submit the roof estimator, we collect the information you enter: your name, phone number, email address, property address, preferred contact method, notes, and your estimator selections (such as property type, roof size, material and ZIP code), along with the preliminary estimate shown to you.</p>
-      <p>You can use the roof estimator to see a preliminary range without providing contact information. Those estimator selections are processed to calculate the range and are not stored unless you choose to submit a request.</p>
+      <p>You can use the roof estimator to see a ballpark range without providing contact information. Those estimator selections are processed to calculate the range and are not stored unless you choose to submit a request.</p>
       <h2>How we use it</h2>
       <ul>
         <li>To respond to your request, schedule an inspection and prepare an estimate.</li>

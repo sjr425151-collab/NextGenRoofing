@@ -23,10 +23,11 @@ test("residential estimate → range → lead submitted and stored", async ({ pa
   await est.locator("fieldset", { hasText: "Existing layers" }).getByText("One layer").click();
   await est.getByRole("button", { name: "See my estimate" }).click();
 
-  await expect(est.getByRole("heading", { name: "Your preliminary estimate" })).toBeVisible();
-  await expect(est.getByText("Demonstration pricing — not NextGen rates")).toBeVisible();
+  await expect(est.getByRole("heading", { name: "Your ballpark estimate" })).toBeVisible();
+  await expect(est.getByText("Demonstration pricing — not NextGen rates")).toHaveCount(0);
+  await expect(est.getByRole("link", { name: /Call \(440\) 228-5933/ })).toBeVisible();
   await expect(est.getByText(/\$\d{1,3},\d{3}/).first()).toBeVisible();
-  await expect(est.getByText(/not a binding quote/)).toBeVisible();
+  await expect(est.getByText(/For exact rates, call/)).toBeVisible();
 
   const unique = `E2E Tester ${Date.now()}`;
   await est.getByRole("textbox", { name: "Full name" }).fill(unique);
