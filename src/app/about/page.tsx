@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/Img";
 import Link from "next/link";
 import { LogoMark } from "@/components/brand/Logo";
 import { CredibilityStrip, FinalCta } from "@/components/home/Sections";

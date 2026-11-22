@@ -8,7 +8,11 @@ const securityHeaders = [
   { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
 ];
 
+const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
+const noindex = process.env.NEXT_PUBLIC_NOINDEX === "true";
+
 const nextConfig: NextConfig = {
+  basePath: basePath || undefined,
   poweredByHeader: false,
   reactStrictMode: true,
   images: {
@@ -19,7 +23,7 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
-      { source: "/:path*", headers: securityHeaders },
+      { source: "/:path*", headers: noindex ? [...securityHeaders, { key: "X-Robots-Tag", value: "noindex, nofollow" }] : securityHeaders },
       {
         source: "/media/:path*",
         headers: [{ key: "Cache-Control", value: "public, max-age=2592000, stale-while-revalidate=86400" }],

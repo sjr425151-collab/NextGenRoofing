@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { Phone } from "@/components/ui/Icons";
 import { asOfLabel, business, credentials } from "@/content/business";
@@ -32,7 +33,7 @@ export default function ContactPage() {
         <div className="lg:col-span-7">
           <div className="border border-line bg-white p-6 sm:p-10">
             <h2 className="font-display text-2xl font-bold tracking-tight">Request an inspection</h2>
-            <p className="mt-2 text-steel-2">Free, with no obligation. Prefer a ballpark first? <a href="/estimate" className="font-semibold text-ink underline">Try the roof estimator</a>.</p>
+            <p className="mt-2 text-steel-2">Free, with no obligation. Prefer a ballpark first? <Link href="/estimate" className="font-semibold text-ink underline">Try the roof estimator</Link>.</p>
             <div className="mt-8"><ContactForm /></div>
           </div>
         </div>

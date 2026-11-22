@@ -3,7 +3,7 @@ import { SITE_URL, business } from "@/content/business";
 
 export function pageMeta({ title, description, path, image }: { title: string; description: string; path: string; image?: string }): Metadata {
   const url = `${SITE_URL}${path}`;
-  const og = image ?? "/og.jpg";
+  const og = `${SITE_URL}${image ?? "/og.jpg"}`;
   return {
     title,
     description,

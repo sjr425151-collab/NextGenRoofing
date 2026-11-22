@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { LogoMark } from "@/components/brand/Logo";
 import { ArrowRight, Pause, Play } from "@/components/ui/Icons";
 import { business } from "@/content/business";
+import { asset } from "@/lib/paths";
 
 export type HeroConcept = "video" | "stills";
 
@@ -23,8 +24,8 @@ function ArtImage({
   className,
 }: { desktop: string; mobile?: string; alt: string; priority?: boolean; className?: string }) {
   const common = { alt, fill: true, quality: 75, priority, sizes: "100vw" } as const;
-  const { props: d } = getImageProps({ ...common, src: desktop });
-  const m = mobile ? getImageProps({ ...common, src: mobile, sizes: "100vw" }).props : null;
+  const { props: d } = getImageProps({ ...common, src: asset(desktop) });
+  const m = mobile ? getImageProps({ ...common, src: asset(mobile), sizes: "100vw" }).props : null;
   return (
     <picture>
       {m ? <source media="(max-width: 767px)" srcSet={m.srcSet} sizes="100vw" /> : null}
@@ -77,7 +78,7 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
     const set = (el: HTMLVideoElement | null, src: VideoSrc, key: "a" | "b", autoplay: boolean) => {
       if (!el || el.dataset.loaded) return;
       el.dataset.loaded = "1";
-      el.innerHTML = `<source src="${src.base}-${v}.webm" type='video/webm; codecs="av01.0.05M.08"'><source src="${src.base}-${v}.mp4" type="video/mp4">`;
+      el.innerHTML = `<source src="${asset(src.base)}-${v}.webm" type='video/webm; codecs="av01.0.05M.08"'><source src="${asset(src.base)}-${v}.mp4" type="video/mp4">`;
       el.load();
       el.addEventListener("playing", () => setVideoReady((s) => ({ ...s, [key]: true })), { once: true });
       if (autoplay && !pausedRef.current) el.play().catch(() => {});

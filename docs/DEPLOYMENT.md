@@ -48,7 +48,32 @@ With `LEAD_WEBHOOK_SECRET` set, verify `x-nextgen-signature: sha256=HMAC_SHA256(
 - [ ] Submit `sitemap.xml` in Google Search Console; link the site from the Google Business Profile
 - [ ] Remove `NEXT_PUBLIC_NOINDEX` (or set `false`) on the production deployment only
 
-## Preview / client review deployment
+## Preview at livefiberconnect.com/preview/nextgenroofing
+
+The preview runs the same app under a sub-path. Settings live in `.env.preview` (committed; contains no secrets):
+
+```
+NEXT_PUBLIC_BASE_PATH=/preview/nextgenroofing
+NEXT_PUBLIC_SITE_URL=https://livefiberconnect.com/preview/nextgenroofing
+NEXT_PUBLIC_NOINDEX=true        # meta robots + X-Robots-Tag: noindex
+ALLOW_DEMO_PRICING=true         # estimator shows demo-labeled ranges
+```
+
+```bash
+npm ci
+npm run build:preview           # the base path is read at build AND start —
+npm run start:preview -- -p 3000  # always use these paired scripts
+npm run check:preview           # crawls every page; fails on any broken request
+```
+
+Secrets (lead delivery, Turnstile) go in the host's environment, not in `.env.preview`.
+Without a lead sink, preview forms honestly say “Online requests are temporarily unavailable — please call.”
+
+The livefiberconnect.com server must forward `/preview/nextgenroofing` and everything under it to this app **without stripping the prefix** (e.g. nginx `location /preview/nextgenroofing { proxy_pass http://127.0.0.1:3000; }` — note: no trailing slash on `proxy_pass`). On Vercel, deploy this repo as its own project and add a rewrite in the livefiberconnect.com project: `/preview/nextgenroofing/:path*` → `https://<this-project>.vercel.app/preview/nextgenroofing/:path*`.
+
+**Moving to the client's domain later:** remove `NEXT_PUBLIC_BASE_PATH`, set `NEXT_PUBLIC_SITE_URL` to the new domain, unset `NEXT_PUBLIC_NOINDEX` and `ALLOW_DEMO_PRICING`, then `npm run build && npm start`. No code changes are needed.
+
+## Preview / client review deployment (generic)
 
 ```
 NEXT_PUBLIC_NOINDEX=true

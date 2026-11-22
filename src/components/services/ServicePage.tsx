@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "@/components/ui/Img";
 import Link from "next/link";
 import { RoofEstimator } from "@/components/estimator/RoofEstimator";
 import { FinalCta } from "@/components/home/Sections";

@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChoiceGroup, TextArea, TextField } from "@/components/forms/Choice";
 import { ArrowRight, Check, Phone } from "@/components/ui/Icons";
 import { business } from "@/content/business";
+import { asset } from "@/lib/paths";
 
 export type ContactValues = {
   name: string;
@@ -72,7 +73,7 @@ export function LeadForm({
   }, [initial?.address]);
 
   useEffect(() => {
-    fetch("/api/leads").then((r) => r.json()).then((d) => setAvailable(Boolean(d.enabled))).catch(() => setAvailable(null));
+    fetch(asset("/api/leads")).then((r) => r.json()).then((d) => setAvailable(Boolean(d.enabled))).catch(() => setAvailable(null));
   }, []);
 
   const set = <K extends keyof ContactValues>(k: K, val: ContactValues[K]) => {
@@ -105,7 +106,7 @@ export function LeadForm({
     }
     setStatus({ kind: "submitting" });
     try {
-      const res = await fetch("/api/leads", {
+      const res = await fetch(asset("/api/leads"), {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({

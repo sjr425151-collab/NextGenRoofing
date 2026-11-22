@@ -1,8 +1,9 @@
 "use client";
 
-import Image from "next/image";
+import Image from "@/components/ui/Img";
 import { useRef, useState } from "react";
 import { Play } from "@/components/ui/Icons";
+import { asset } from "@/lib/paths";
 
 /**
  * Click-to-play drone film. Nothing is downloaded until the visitor presses
@@ -30,11 +31,11 @@ export function ProjectFilm({
           muted
           playsInline
           preload="metadata"
-          poster={poster}
+          poster={asset(poster)}
           aria-label={`${title} — drone film`}
         >
-          <source src={`${base}.webm`} type='video/webm; codecs="av01.0.05M.08"' />
-          <source src={`${base}.mp4`} type="video/mp4" />
+          <source src={`${asset(base)}.webm`} type='video/webm; codecs="av01.0.05M.08"' />
+          <source src={`${asset(base)}.mp4`} type="video/mp4" />
         </video>
       ) : (
         <button type="button" onClick={() => setPlaying(true)} className="absolute inset-0 h-full w-full text-left">

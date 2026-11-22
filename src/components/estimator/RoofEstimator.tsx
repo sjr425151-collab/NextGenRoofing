@@ -6,6 +6,7 @@ import { LeadForm } from "@/components/forms/LeadForm";
 import { ArrowLeft, ArrowRight, Info, Phone } from "@/components/ui/Icons";
 import { business } from "@/content/business";
 import type { EstimateInput, EstimateResult } from "@/lib/estimator/schema";
+import { asset } from "@/lib/paths";
 
 type Sector = "residential" | "commercial";
 type Scope = "replacement" | "repair" | "new";
@@ -82,7 +83,7 @@ export function RoofEstimator({ preset, stepHeadingLevel = 3 }: { preset?: { sec
   };
 
   useEffect(() => {
-    fetch("/api/estimate").then((r) => r.json()).then((d) => { setMode(d.mode); setDisclaimer(d.disclaimer); }).catch(() => {});
+    fetch(asset("/api/estimate")).then((r) => r.json()).then((d) => { setMode(d.mode); setDisclaimer(d.disclaimer); }).catch(() => {});
   }, []);
 
   // Move focus to the step heading on step change (not on first render)
@@ -164,7 +165,7 @@ export function RoofEstimator({ preset, stepHeadingLevel = 3 }: { preset?: { sec
     setLoading(true);
     setApiError(undefined);
     try {
-      const res = await fetch("/api/estimate", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(input) });
+      const res = await fetch(asset("/api/estimate"), { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(input) });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Something went wrong");
       setResult(data.result);

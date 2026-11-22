@@ -8,6 +8,7 @@ import { RevealObserver } from "@/components/motion/RevealObserver";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SITE_URL, business } from "@/content/business";
 import { organizationJsonLd } from "@/lib/seo";
+import { asset } from "@/lib/paths";
 
 const manrope = localFont({ src: "../fonts/manrope.woff2", variable: "--font-manrope", weight: "200 800", display: "swap", preload: true });
 const inter = localFont({ src: "../fonts/inter.woff2", variable: "--font-inter", weight: "100 900", display: "swap", preload: false, adjustFontFallback: "Arial" });
@@ -19,7 +20,7 @@ export const metadata: Metadata = {
     "Second-generation residential and commercial roofing in Toledo, Ohio. Roof replacement, repair, and flat roofing systems — EPDM, TPO, torch-down, spray foam and coatings. Free inspections.",
   applicationName: business.shortName,
   formatDetection: { telephone: true },
-  icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }], apple: "/apple-icon.png" },
+  icons: { icon: [{ url: asset("/icon.svg"), type: "image/svg+xml" }], apple: asset("/apple-icon.png") },
   robots: process.env.NEXT_PUBLIC_NOINDEX === "true" ? { index: false, follow: false } : undefined,
 };
 
