@@ -1,4 +1,4 @@
-export type ServiceSlug = "residential-roofing" | "commercial-roofing" | "roof-repair" | "flat-roofing";
+export type ServiceSlug = "residential-roofing" | "commercial-roofing" | "roof-repair" | "flat-roofing" | "roof-inspection";
 
 export type System = { name: string; summary: string; bestFor: string };
 
@@ -7,6 +7,12 @@ export type Service = {
   nav: string;
   title: string;
   eyebrow: string;
+  /** Descriptive label rendered as the first line of the page's H1 (e.g. "Residential Roofing in Toledo, OH"). */
+  h1Label: string;
+  /** Core services appear in the homepage/About service grids; others only in menus and links. */
+  core: boolean;
+  /** Optional primary hero CTA (defaults to the on-page estimator). */
+  primaryCta?: { label: string; href: string };
   headline: string;
   lede: string;
   metaTitle: string;
@@ -46,10 +52,12 @@ export const services: Service[] = [
     nav: "Residential",
     title: "Residential Roofing",
     eyebrow: "Homes",
+    h1Label: "Residential Roofing in Toledo, OH",
+    core: true,
     headline: "A roof built for the house you live in.",
     lede: "Complete roof installation and replacement for Toledo-area homes — from tear-off and decking to ridge cap and final cleanup.",
-    metaTitle: "Residential Roofing in Toledo, OH",
-    metaDescription: "Residential roof installation and replacement in Toledo, Ohio by NextGen Roofing & Construction. Free inspections and estimates.",
+    metaTitle: "Residential Roof Replacement in Toledo, OH",
+    metaDescription: "Residential roof replacement and new roof installation in Toledo, OH from a second-generation roofer. Free inspections and estimates — (440) 228-5933.",
     image: "/media/stills/hip-roof-wide.jpg",
     imageAlt: "Aerial view of a completed brown architectural shingle hip roof on a brick home",
     offerings: [
@@ -71,10 +79,12 @@ export const services: Service[] = [
     nav: "Commercial",
     title: "Commercial Roofing",
     eyebrow: "Buildings",
+    h1Label: "Commercial Roofing in Toledo, OH",
+    core: true,
     headline: "Commercial roofs, planned around your operation.",
     lede: "Installation, replacement, restoration and maintenance of flat and low-slope commercial roof systems.",
-    metaTitle: "Commercial Roofing in Toledo, OH",
-    metaDescription: "Commercial flat and low-slope roofing in Toledo, Ohio — EPDM, TPO, modified bitumen, spray foam and roof coatings. Free inspections.",
+    metaTitle: "Commercial Roofing Contractor, Toledo OH",
+    metaDescription: "Commercial flat and low-slope roofing in Toledo, OH: EPDM, TPO, modified bitumen, spray foam and roof coatings. Free roof inspections — (440) 228-5933.",
     image: "/media/photos/commercial-roof.jpg",
     imageAlt: "Roofing crew in safety harnesses walking across a white membrane roof on a commercial building",
     imagePosition: "50% 40%",
@@ -103,10 +113,12 @@ export const services: Service[] = [
     nav: "Repair",
     title: "Roof Repair",
     eyebrow: "Repairs",
+    h1Label: "Roof Repair in Toledo, OH",
+    core: true,
     headline: "Find the cause. Fix it properly.",
     lede: "Leak tracing and roof repairs for homes and commercial buildings — shingles, flashing, membranes, and penetrations.",
-    metaTitle: "Roof Repair in Toledo, OH",
-    metaDescription: "Roof leak and repair services in Toledo, Ohio for shingle and flat roofs. Free inspection from NextGen Roofing & Construction.",
+    metaTitle: "Roof Repair & Leak Repair in Toledo, OH",
+    metaDescription: "Roof leak tracing and repair for shingle and flat roofs in Toledo, OH — shingles, flashing, membranes and penetrations. Free inspection: (440) 228-5933.",
     image: "/media/stills/farmhouse-ridge-vent.jpg",
     imageAlt: "Close aerial view of ridge cap shingles and a ridge vent on a gray shingle roof",
     offerings: [
@@ -127,10 +139,12 @@ export const services: Service[] = [
     nav: "Flat Roofing",
     title: "Flat Roofing Systems",
     eyebrow: "Low-slope",
+    h1Label: "Flat Roofing Systems in Toledo, OH",
+    core: true,
     headline: "Six systems. One right answer for your roof.",
     lede: "New installation, repair and maintenance of flat and low-slope roofs using EPDM, TPO, self-adhering, torch-down, spray foam and coating systems.",
-    metaTitle: "Flat Roofing — EPDM, TPO, Torch-Down & Spray Foam",
-    metaDescription: "Flat and low-slope roofing in Toledo, Ohio: EPDM, TPO, self-adhering and torch-down modified bitumen, spray polyurethane foam, and roof coatings.",
+    metaTitle: "Flat Roof Repair & Installation, Toledo OH",
+    metaDescription: "Flat and low-slope roofs in Toledo, OH: EPDM, TPO, self-adhering and torch-down modified bitumen, spray foam and coatings. Repairs and new installs.",
     image: "/media/stills/replacement-decking.jpg",
     imageAlt: "Aerial view of new roof sheathing installed during a roof replacement",
     offerings: [
@@ -147,5 +161,39 @@ export const services: Service[] = [
     estimatorPreset: { sector: "commercial", scope: "replacement" },
   },
 ];
+
+services.push({
+  slug: "roof-inspection",
+  nav: "Inspection",
+  title: "Free Roof Inspection",
+  eyebrow: "Inspections",
+  h1Label: "Free Roof Inspection in Toledo, OH",
+  core: false,
+  primaryCta: { label: "Schedule your free inspection", href: "/contact" },
+  headline: "Know exactly where your roof stands.",
+  lede: "Free, no-obligation roof inspections for homes and commercial buildings — so repair or replacement decisions are based on what’s actually on your roof.",
+  metaTitle: "Free Roof Inspection in Toledo, OH",
+  metaDescription: "Free, no-obligation roof inspections for homes and commercial buildings in Toledo, OH. Find out what your roof needs — call (440) 228-5933.",
+  image: "/media/stills/farmhouse-ridge-detail.jpg",
+  imageAlt: "Close aerial view of ridge cap shingles on a recently completed roof",
+  offerings: [
+    { title: "Roof surface", body: "Shingles checked for granule loss, cracking, curling and wind damage; flat-roof membranes for splits, blisters and open seams." },
+    { title: "Flashing & penetrations", body: "Chimneys, walls, vents, pipe boots and skylights — the places most leaks actually start." },
+    { title: "Ventilation & drainage", body: "Ridge and soffit ventilation, gutters and downspouts, and ponding water on low-slope roofs." },
+    { title: "Signs of hidden damage", body: "Soft or uneven decking, stains and other clues that water is getting past the surface." },
+  ],
+  process: [
+    { title: "Request", body: "Call or send a request online. Tell us what you’ve noticed — a leak, missing shingles, or just an older roof." },
+    { title: "Inspection", body: "We look at the roof surface, flashing, penetrations, ventilation and drainage." },
+    { title: "Findings", body: "We walk you through what we found and whether the roof needs a repair, a replacement, or nothing at all." },
+    { title: "Estimate", body: "If work is needed, you receive an estimate with the recommended scope and materials. No obligation." },
+  ],
+  faqs: [
+    { q: "Is the roof inspection really free?", a: "Yes. NextGen Roofing & Construction offers free roof inspections and estimates, with no obligation to hire us." },
+    { q: "When should I have my roof inspected?", a: "Good times are after severe weather, when you notice a leak, stains or missing shingles, before buying or selling a home, or when a roof is getting near the end of its expected life." },
+    { q: "Do you inspect commercial roofs?", a: "Yes. We inspect both residential roofs and commercial flat and low-slope roofs, including EPDM, TPO, modified bitumen, spray foam and coated roofs." },
+  ],
+  estimatorPreset: { sector: "residential", scope: "replacement" },
+});
 
 export const getService = (slug: ServiceSlug) => services.find((s) => s.slug === slug)!;

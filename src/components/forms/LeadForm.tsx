@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { ChoiceGroup, TextArea, TextField } from "@/components/forms/Choice";
 import { ArrowRight, Check, Phone } from "@/components/ui/Icons";
 import { business } from "@/content/business";
+import { track } from "@/lib/analytics";
 import { asset } from "@/lib/paths";
 
 export type ContactValues = {
@@ -117,6 +118,8 @@ export function LeadForm({
       const data = (await res.json().catch(() => ({}))) as { ok?: boolean; id?: string; error?: string; issues?: { path: string; message: string }[] };
       if (res.ok && data.ok && data.id) {
         setStatus({ kind: "success", id: data.id });
+        // Conversion: fired only after the server confirmed delivery. No personal data is sent.
+        track("generate_lead", { form_source: source, preferred_contact: v.preferredContact });
         onSuccess?.();
       } else {
         if (data.issues?.length) {

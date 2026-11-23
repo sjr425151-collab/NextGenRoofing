@@ -4,7 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 const PAGES = ["/", "/residential-roofing", "/commercial-roofing", "/roof-repair", "/flat-roofing", "/projects",
   "/projects/full-roof-replacement", "/projects/hip-roof-shingle-installation", "/projects/farmhouse-re-roof",
   "/projects/gable-roof-replacement-step-by-step", "/projects/gray-hip-roof", "/projects/brown-shingle-ranch", "/projects/charcoal-shingle-roof",
-  "/about", "/contact", "/estimate", "/privacy", "/terms"];
+  "/roof-inspection", "/about", "/contact", "/estimate", "/privacy", "/terms"];
 const WIDTHS = [320, 375, 390, 430, 768, 1024, 1440];
 
 for (const path of PAGES) {
@@ -58,7 +58,10 @@ test("sitemap, robots and structured data", async ({ page, request }) => {
   expect(await (await request.get("/robots.txt")).text()).toContain("Sitemap:");
   await page.goto("/");
   const ld = await page.$$eval('script[type="application/ld+json"]', (s) => s.map((x) => JSON.parse(x.textContent!)));
-  expect(ld.some((d) => d["@type"] === "RoofingContractor" && d.telephone === "+14402285933")).toBe(true);
+  const nodes = ld.flatMap((d) => d["@graph"] ?? [d]);
+  expect(nodes.some((d) => d["@type"] === "RoofingContractor" && d.telephone === "+14402285933")).toBe(true);
+  expect(nodes.some((d) => d["@type"] === "WebSite")).toBe(true);
+  expect(await (await request.get("/sitemap.xml")).text()).toContain("/roof-inspection");
 });
 
 test("unknown routes return 404", async ({ page }) => {

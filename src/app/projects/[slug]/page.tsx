@@ -18,7 +18,10 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const p = getProject((await params).slug);
   if (!p) return {};
-  return pageMeta({ title: p.title, description: p.summary, path: `/projects/${p.slug}`, image: p.cover.src });
+  const tail = " — a NextGen Roofing & Construction project.";
+  const base = p.summary.replace(/\.$/, "");
+  const description = (base + tail).length <= 160 ? base + tail : p.summary;
+  return pageMeta({ title: p.seoTitle ?? p.title, description, path: `/projects/${p.slug}`, image: p.cover.src });
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -48,7 +51,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           ...(p.video ? { video: { "@type": "VideoObject", name: `${p.title} — drone film`, description: p.summary, thumbnailUrl: `${SITE_URL}${p.video.poster}`, contentUrl: `${SITE_URL}${p.video.base}.mp4`, uploadDate: "2026-11-22" } } : {}),
         }}
       />
-      <PageHero eyebrow={p.category} title={p.title} lede={p.summary} image={p.cover.src} imageAlt={p.cover.alt}
+      <PageHero eyebrow={`${p.category} Roofing Project`} title={p.title} lede={p.summary} image={p.cover.src} imageAlt={p.cover.alt}
         crumbs={[{ href: "/projects", label: "Projects" }, { href: `/projects/${p.slug}`, label: p.title }]} />
 
       <section aria-labelledby="film-h" className="bg-paper py-20 sm:py-28">
@@ -74,6 +77,14 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             </dl>
             <div className="mt-8 space-y-4 leading-relaxed text-steel-2">
               {p.description.map((d) => <p key={d}>{d}</p>)}
+            </div>
+            <div className="mt-8 border-t border-line pt-6">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-steel-2">Planning something similar?</p>
+              <ul className="mt-3 space-y-2 font-semibold">
+                <li><Link className="link-underline" href={p.category === "Commercial" ? "/commercial-roofing" : "/residential-roofing"}>{p.category === "Commercial" ? "Commercial roofing" : "Residential roof replacement"}</Link></li>
+                <li><Link className="link-underline" href="/roof-inspection">Free roof inspection</Link></li>
+                <li><Link className="link-underline" href="/estimate">Ballpark roof estimate</Link></li>
+              </ul>
             </div>
           </div>
         </div>

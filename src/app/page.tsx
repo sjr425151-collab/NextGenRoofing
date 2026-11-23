@@ -4,12 +4,12 @@ import { pageMeta } from "@/lib/seo";
 
 export const metadata = {
   ...pageMeta({
-    title: "Roofing in Toledo, OH — Residential & Commercial",
+    title: "Toledo Roofing Contractor",
     description:
-      "NextGen Roofing & Construction: second-generation residential and commercial roofing in Toledo, Ohio. Roof replacement, repair, and flat roofing systems. Free inspections and estimates.",
+      "Second-generation roofing contractor in Toledo, OH. Roof replacement, repair and flat roofing for homes and businesses. Free inspections — call (440) 228-5933.",
     path: "/",
   }),
-  title: { absolute: "NextGen Roofing & Construction | Roofing in Toledo, OH" },
+  title: { absolute: "Toledo Roofing Contractor | NextGen Roofing & Construction" },
 };
 
 export default function Home() {

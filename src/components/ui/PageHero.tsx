@@ -1,5 +1,7 @@
 import Image from "@/components/ui/Img";
 import Link from "next/link";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export function PageHero({
   eyebrow,
@@ -26,6 +28,7 @@ export function PageHero({
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(17_18_20/0.55)_0%,rgb(17_18_20/0.25)_35%,rgb(17_18_20/0.9)_100%)]" aria-hidden />
       <div className="arch-lines-dark absolute inset-0 -z-10" aria-hidden />
       <div className="container-x">
+        {crumbs ? <JsonLd data={breadcrumbJsonLd(crumbs.map((c) => ({ name: c.label, path: c.href })))} /> : null}
         {crumbs ? (
           <nav aria-label="Breadcrumb" className="mb-8">
             <ol className="flex flex-wrap items-center gap-2 text-sm text-white/70">
@@ -39,8 +42,12 @@ export function PageHero({
             </ol>
           </nav>
         ) : null}
-        <p className="eyebrow cine-in text-white/80">{eyebrow}</p>
-        <h1 className="display-lg cine-rise mt-5 max-w-4xl" style={{ ["--d" as string]: "100ms" }}>{title}</h1>
+        {/* The eyebrow is part of the H1 (descriptive, keyword-bearing) but keeps its visual style. */}
+        <h1 className="max-w-4xl">
+          <span className="eyebrow cine-in text-white/80">{eyebrow}</span>
+          {" "}
+          <span className="display-lg cine-rise mt-5 block" style={{ ["--d" as string]: "100ms" }}>{title}</span>
+        </h1>
         {lede ? <p className="lede cine-in mt-6 max-w-2xl text-white/85" style={{ ["--d" as string]: "200ms" }}>{lede}</p> : null}
         {children ? <div className="cine-in mt-9" style={{ ["--d" as string]: "300ms" }}>{children}</div> : null}
       </div>

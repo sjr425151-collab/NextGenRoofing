@@ -5,6 +5,7 @@ import { ChoiceGroup, TextField, type ChoiceOption } from "@/components/forms/Ch
 import { LeadForm } from "@/components/forms/LeadForm";
 import { ArrowLeft, ArrowRight, Info, Phone } from "@/components/ui/Icons";
 import { business } from "@/content/business";
+import { track } from "@/lib/analytics";
 import type { EstimateInput, EstimateResult } from "@/lib/estimator/schema";
 import { asset } from "@/lib/paths";
 
@@ -169,6 +170,7 @@ export function RoofEstimator({ preset, stepHeadingLevel = 3 }: { preset?: { sec
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Something went wrong");
       setResult(data.result);
+      track("estimate_complete", { sector: input.sector, scope: input.scope, result: data.result?.kind });
       setMode(data.mode);
       setDisclaimer(data.disclaimer);
       setStep(2);

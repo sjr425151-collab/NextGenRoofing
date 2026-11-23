@@ -237,11 +237,14 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
         {/* ── Scene 1 copy */}
         <div className="container-x relative flex h-full flex-col justify-end pb-[max(5.5rem,12vh)] pt-28 md:pb-[14vh]">
           <div data-s1 className="max-w-4xl">
-            <p className="eyebrow cine-in text-white/80" style={{ ["--d" as string]: "100ms" }}>
-              Toledo, Ohio · Residential &amp; Commercial Roofing
-            </p>
-            <h1 className="display-xl cine-rise mt-5" style={{ ["--d" as string]: "180ms" }}>
-              Raising the<br /> Standard.
+            {/* Descriptive first line is part of the H1; visual styling unchanged. */}
+            <h1>
+              <span className="eyebrow cine-in text-white/80" style={{ ["--d" as string]: "100ms" }}>
+                Toledo, Ohio · Residential &amp; Commercial Roofing
+              </span>{" "}
+              <span className="display-xl cine-rise mt-5 block" style={{ ["--d" as string]: "180ms" }}>
+                Raising the<br /> Standard.
+              </span>
             </h1>
             <p className="lede cine-in mt-6 max-w-xl text-white/85" style={{ ["--d" as string]: "300ms" }}>
               Built on experience. Driven by the next generation.

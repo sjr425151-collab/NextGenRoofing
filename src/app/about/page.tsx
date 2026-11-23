@@ -10,8 +10,8 @@ import { services } from "@/content/services";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "About NextGen — A Second-Generation Roofing Company",
-  description: `NextGen Roofing & Construction is a second-generation roofing company in Toledo, Ohio. Founder ${business.founder.name} learned the trade from his father, ${business.family.fatherName}, of ${business.family.fatherCompany}.`,
+  title: "About NextGen — Second-Generation Roofers",
+  description: `Meet NextGen Roofing & Construction, a Toledo roofing contractor. Founder ${business.founder.name} learned the trade from his father, ${business.family.fatherName}, of ${business.family.fatherCompany}.`,
   path: "/about",
   image: "/media/stills/farmhouse-street.jpg",
 });
@@ -20,7 +20,7 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="About NextGen"
+        eyebrow="About NextGen Roofing & Construction"
         title="The next generation of a family trade."
         lede="A new company with deep roots — built to bring a family’s standard of craftsmanship to every roof we touch."
         image="/media/stills/farmhouse-street.jpg"
@@ -88,7 +88,7 @@ export default function AboutPage() {
         <div className="container-x">
           <SectionHeading eyebrow="What we do" title={<span id="what-h">Residential and commercial roofing</span>} />
           <ul className="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-            {services.map((s) => (
+            {services.filter((x) => x.core).map((s) => (
               <li key={s.slug} className="bg-white">
                 <Link href={`/${s.slug}`} className="group flex h-full flex-col p-7">
                   <span className="font-display text-xl font-bold">{s.title}</span>
