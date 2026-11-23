@@ -14,7 +14,10 @@
     "build:preview": "node scripts/with-env.cjs .env.preview build",
     "start:preview": "node scripts/with-env.cjs .env.preview start",
     "check:preview": "BASE=http://localhost:${PORT:-3000}/preview/nextgenroofing node scripts/check-subpath.cjs",
-    "build:render": "NEXT_BUILD_CPUS=1 NODE_OPTIONS=--max-old-space-size=320 node scripts/with-env.cjs .env.preview build --webpack"
+    "build:render": "NEXT_BUILD_CPUS=1 NODE_OPTIONS=--max-old-space-size=320 node scripts/with-env.cjs .env.live build --webpack",
+    "build:live": "node scripts/with-env.cjs .env.live build",
+    "start:live": "node scripts/with-env.cjs .env.live start",
+    "build:render-preview": "NEXT_BUILD_CPUS=1 NODE_OPTIONS=--max-old-space-size=320 node scripts/with-env.cjs .env.preview build --webpack"
   },
   "engines": {
     "node": ">=20.9"

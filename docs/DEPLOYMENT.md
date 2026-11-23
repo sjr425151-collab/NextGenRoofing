@@ -72,7 +72,18 @@ The livefiberconnect.com server must forward `/preview/nextgenroofing` and every
 
 **Moving to the client's domain later:** remove `NEXT_PUBLIC_BASE_PATH`, set `NEXT_PUBLIC_SITE_URL` to the new domain, unset `NEXT_PUBLIC_NOINDEX` and `ALLOW_DEMO_PRICING`, then `npm run build && npm start`. No code changes are needed.
 
-## Render (livefiberconnect.com is hosted on Render)
+## Live: nextgenroofing.work (Render)
+
+The Render service (`nextgen-roofing-preview`, from `render.yaml`) builds with `.env.live` and serves the site from the domain root.
+
+1. Render → the service → **Settings → Custom Domains → Add**: `nextgenroofing.work` (and `www.nextgenroofing.work`).
+2. At the domain registrar, create exactly the DNS records Render displays for each name (typically an A/ALIAS record for the apex and a CNAME for `www`). Render issues the TLS certificate automatically once DNS resolves.
+3. Canonical URLs, sitemap, Open Graph and structured data use `https://nextgenroofing.work` (`NEXT_PUBLIC_SITE_URL` in `.env.live`). Search indexing is **on** (`NEXT_PUBLIC_NOINDEX=false`).
+4. Lead delivery: add `LEAD_SHEET_WEBHOOK_URL` and `LEAD_SHEET_TOKEN` under the service's **Environment**, then redeploy.
+
+Verified in a clean clone with the exact Render commands: `/` returns 200 and all pages crawl with no failed requests.
+
+## Render — earlier sub-path preview (superseded)
 
 ### 1 · Create the NextGen service
 

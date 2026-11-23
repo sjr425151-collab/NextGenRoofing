@@ -6,7 +6,7 @@
  * unknown and the UI hides them rather than guessing.
  */
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://www.example.com").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://nextgenroofing.work").replace(/\/$/, "");
 
 export const business = {
   legalName: "NextGen Roofing & Construction LLC",

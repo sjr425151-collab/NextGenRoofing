@@ -7,7 +7,7 @@ Everything below is either missing from the supplied assets or requires an owner
 | # | Item | Why it matters | Current handling |
 | --- | --- | --- | --- |
 | 1 | **Deploy the Apps Script** on “Lead form requests - Website” (NextGen Gmail) and provide its URL + token — decided, setup steps in `integrations/google-sheets/README.md` | Until then requests cannot reach the business | Forms show “Online requests are temporarily unavailable — please call” |
-| 2 | **Domain** and **hosting** choice (paid) | Required to publish | Not purchased or deployed |
+| 2 | ✅ Domain **nextgenroofing.work** on Render. Remaining: add the custom domain in Render + DNS records at the registrar | — | Site builds for the domain root |
 | 3 | ✅ Official logo in use (extracted from the logo sheet as transparent PNGs; brand red #BF2A39 sampled from it). Optional: supply SVG/AI vector files for sharper large-format use | — | `public/brand/` |
 | 4 | **Homeowner permission** for the three filmed projects | They're customers' homes | Confirm before launch |
 | 5 | Credentials confirmed from supplied screenshots (BBB A, accredited 10/8/2025; Google 5.0 / 3 reviews, Nov 22, 2026). **Re-check at launch** — ratings change | — | Displayed with “as of Nov 2026” and a “Verify” link |

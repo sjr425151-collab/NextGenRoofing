@@ -1,6 +1,5 @@
-# Render Blueprint — NextGen Roofing preview
-# Served at https://livefiberconnect.com/preview/nextgenroofing via the livefiberconnect.com
-# service forwarding that path here (see docs/DEPLOYMENT.md → "Render").
+# Render Blueprint — NextGen Roofing & Construction
+# Live at https://nextgenroofing.work (custom domain on this service; served from the root).
 services:
   - type: web
     name: nextgen-roofing-preview
@@ -9,8 +8,8 @@ services:
     branch: claude/nextgen-roofing-website-k8ccjl
     # build:render = webpack, 1 worker, capped heap (~440 MB peak measured) to fit 512 MB instances
     buildCommand: npm ci && npm run build:render
-    startCommand: npm run start:preview -- -p $PORT -H 0.0.0.0
-    healthCheckPath: /preview/nextgenroofing
+    startCommand: npm run start:live -- -p $PORT -H 0.0.0.0
+    healthCheckPath: /
     autoDeploy: true
     envVars:
       - key: NODE_VERSION
