@@ -18,7 +18,7 @@ export default function ContactPage() {
         <div className="lg:col-span-5">
           <JsonLd data={breadcrumbJsonLd([{ name: "Contact", path: "/contact" }])} />
           <h1>
-            <span className="eyebrow text-red-deep">Contact NextGen Roofing · Toledo, OH</span>
+            <span className="eyebrow text-red-deep">Contact NextGen Roofing</span>
             {" "}
             <span className="display-lg mt-5 block">Schedule your free inspection.</span>
           </h1>

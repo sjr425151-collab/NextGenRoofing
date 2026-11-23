@@ -277,3 +277,6 @@
 /* Headlines: transform-only entrance so they paint immediately (keeps LCP fast). */
 @keyframes cine-rise { from { transform: translateY(22px); } to { transform: none; } }
 .js .cine-rise { animation: cine-rise 1.2s var(--ease-out-expo) backwards; animation-delay: var(--d, 0ms); }
+
+/* Eyebrow lines that live inside an H1 keep the paragraph wrapping they had before (not h1 "balance"). */
+h1 > .eyebrow { text-wrap: pretty; }
