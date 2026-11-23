@@ -21,7 +21,11 @@ export default function PrivacyPage() {
       <h2>Service providers</h2>
       <p>Submitted requests are delivered to us using service providers that host this website and transmit messages on our behalf. They may process your information only to provide those services. If spam protection is enabled, a verification service may process technical information about your browser to confirm the submission came from a person.</p>
       <h2>Cookies and analytics</h2>
-      <p>This website does not use advertising cookies or third-party analytics. If that changes, this policy will be updated before such tools are added.</p>
+      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ? (
+        <p>This website uses Google Analytics to understand how visitors use the site — for example, which pages are viewed and whether a request form was submitted. Google Analytics uses cookies and collects information such as your browser type, device, approximate location and pages visited. We do not send your name, phone number, email address or property address to Google Analytics. You can opt out using Google’s browser add-on at tools.google.com/dlpage/gaoptout. This website does not use advertising cookies.</p>
+      ) : (
+        <p>This website does not use advertising cookies or third-party analytics. If that changes, this policy will be updated before such tools are added.</p>
+      )}
       <h2>Retention and security</h2>
       <p>We keep inquiry information only as long as needed to respond to you and manage any resulting project, and we take reasonable measures to protect it. No method of transmission over the internet is completely secure.</p>
       <h2>Your choices</h2>

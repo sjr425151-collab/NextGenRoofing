@@ -9,7 +9,7 @@ import { SectionHeading } from "@/components/ui/Section";
 import { SITE_URL, business } from "@/content/business";
 import { projects } from "@/content/projects";
 import { getService, services, type ServiceSlug } from "@/content/services";
-import { pageMeta } from "@/lib/seo";
+import { AREA_SERVED, businessRef, pageMeta } from "@/lib/seo";
 
 export function serviceMetadata(slug: ServiceSlug) {
   const s = getService(slug);
@@ -18,7 +18,8 @@ export function serviceMetadata(slug: ServiceSlug) {
 
 export function ServicePage({ slug }: { slug: ServiceSlug }) {
   const s = getService(slug);
-  const others = services.filter((x) => x.slug !== slug);
+  // Core services only, so the grid layout stays balanced (3 items on core pages, 4 on the inspection page).
+  const others = services.filter((x) => x.slug !== slug && x.core);
   // Single-image pages (commercial) show no residential project thumbnails.
   const related = s.singleImage ? [] : projects.slice(0, 2);
 
@@ -30,30 +31,28 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
           "@graph": [
             {
               "@type": "Service",
+              "@id": `${SITE_URL}/${slug}#service`,
               name: s.title,
               serviceType: s.title,
               description: s.metaDescription,
-              provider: { "@id": `${SITE_URL}/#business` },
-              areaServed: { "@type": "City", name: `${business.address.city}, ${business.address.region}` },
+              provider: businessRef,
+              areaServed: AREA_SERVED,
               url: `${SITE_URL}/${slug}`,
             },
             {
               "@type": "FAQPage",
               mainEntity: s.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
             },
-            {
-              "@type": "BreadcrumbList",
-              itemListElement: [
-                { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
-                { "@type": "ListItem", position: 2, name: s.title, item: `${SITE_URL}/${slug}` },
-              ],
-            },
           ],
         }}
       />
-      <PageHero eyebrow={s.eyebrow} title={s.headline} lede={s.lede} image={s.image} imageAlt={s.imageAlt} imagePosition={s.imagePosition} crumbs={[{ href: `/${slug}`, label: s.title }]}>
+      <PageHero eyebrow={s.h1Label} title={s.headline} lede={s.lede} image={s.image} imageAlt={s.imageAlt} imagePosition={s.imagePosition} crumbs={[{ href: `/${slug}`, label: s.title }]}>
         <div className="flex flex-col gap-3 xs:flex-row">
-          <Link href="#estimate" className="btn">Get a ballpark estimate <ArrowRight className="btn-arrow h-4 w-4" /></Link>
+          {s.primaryCta ? (
+            <Link href={s.primaryCta.href} className="btn">{s.primaryCta.label} <ArrowRight className="btn-arrow h-4 w-4" /></Link>
+          ) : (
+            <Link href="#estimate" className="btn">Get a ballpark estimate <ArrowRight className="btn-arrow h-4 w-4" /></Link>
+          )}
           <a href={`tel:${business.phone.e164}`} className="btn btn-ghost text-white"><Phone /> {business.phone.display}</a>
         </div>
       </PageHero>
@@ -108,6 +107,12 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
               </li>
             ))}
           </ol>
+          {slug !== "roof-inspection" ? (
+            <p className="mt-12 text-steel-2">
+              Every project starts with a free look at the roof.{" "}
+              <Link href="/roof-inspection" className="font-semibold text-ink underline underline-offset-4">What a free roof inspection covers</Link>
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -159,7 +164,7 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
 
       {/* Other services */}
       <nav aria-label="Other services" className="border-t border-line bg-paper">
-        <ul className="container-x grid sm:grid-cols-3">
+        <ul className={`container-x grid ${others.length === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-3"}`}>
           {others.map((o, i) => (
             <li key={o.slug} className={`${i > 0 ? "border-t sm:border-l sm:border-t-0" : ""} border-line`}>
               <Link href={`/${o.slug}`} className="group flex items-center justify-between gap-4 py-8 sm:px-8 sm:first:pl-0">

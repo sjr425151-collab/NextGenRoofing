@@ -6,6 +6,8 @@
 export type Project = {
   slug: string;
   title: string;
+  /** Optional search title when `title` alone lacks context. */
+  seoTitle?: string;
   category: "Residential" | "Commercial" | "Flat Roofing" | "Repair";
   summary: string;
   description: string[];
@@ -115,6 +117,7 @@ projects.push(
   },
   {
     slug: "gray-hip-roof",
+    seoTitle: "Gray Hip Roof Shingle Project",
     title: "Gray Hip Roof",
     category: "Residential",
     summary: "A hip roof finished in gray shingles, photographed from directly above and at an angle.",
@@ -129,6 +132,7 @@ projects.push(
   },
   {
     slug: "brown-shingle-ranch",
+    seoTitle: "Brown Shingle Ranch Roof Project",
     title: "Brown Shingle Ranch Roof",
     category: "Residential",
     summary: "A sprawling ranch roof with several hips and wings, finished in a warm brown shingle.",
@@ -143,6 +147,7 @@ projects.push(
   },
   {
     slug: "charcoal-shingle-roof",
+    seoTitle: "Charcoal Shingle Roof Project",
     title: "Charcoal Shingle Roof",
     category: "Residential",
     summary: "A complex roof with multiple gables and valleys, finished in a dark charcoal shingle.",

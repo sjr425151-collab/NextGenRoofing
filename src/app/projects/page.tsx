@@ -7,8 +7,8 @@ import { fieldPhotos, projects } from "@/content/projects";
 import { pageMeta } from "@/lib/seo";
 
 export const metadata = pageMeta({
-  title: "Roofing Projects",
-  description: "Drone footage and photography of NextGen Roofing & Construction projects — full roof replacements and shingle installations.",
+  title: "Roofing Projects & Drone Footage",
+  description: "Real NextGen roofing projects — roof replacements, tear-offs and new shingle roofs — in drone footage and job photos. Free inspections: (440) 228-5933.",
   path: "/projects",
   image: "/media/stills/replacement-complete.jpg",
 });
@@ -17,7 +17,7 @@ export default function ProjectsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Projects"
+        eyebrow="Roofing Projects"
         title="Work you can see from every angle."
         lede="Real NextGen roofs: drone films and photos from the job. More are added as projects are completed."
         image="/media/stills/hip-roof-context.jpg"

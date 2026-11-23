@@ -100,7 +100,7 @@ export function ServicesShowcase() {
           <p data-reveal className="max-w-sm text-mist">Steep-slope shingle roofs and low-slope commercial systems, installed, replaced and repaired.</p>
         </div>
         <ul className="mt-14 grid gap-px bg-line-dark sm:grid-cols-2">
-          {services.map((s, i) => (
+          {services.filter((x) => x.core).map((s, i) => (
             <li key={s.slug} data-reveal style={{ ["--reveal-delay" as string]: `${(i % 2) * 90}ms` }} className="bg-ink">
               <Link href={`/${s.slug}`} className="group relative block overflow-hidden">
                 <div className="zoom-media relative aspect-[16/10]">

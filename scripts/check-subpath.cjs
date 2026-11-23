@@ -4,7 +4,7 @@ const { chromium } = require("playwright");
 const BASE = (process.env.BASE || "http://localhost:3000").replace(/\/$/, "");
 const pages = ["/", "/residential-roofing", "/commercial-roofing", "/roof-repair", "/flat-roofing", "/projects",
   "/projects/full-roof-replacement", "/projects/hip-roof-shingle-installation", "/projects/farmhouse-re-roof", "/projects/gable-roof-replacement-step-by-step", "/projects/gray-hip-roof", "/projects/brown-shingle-ranch", "/projects/charcoal-shingle-roof",
-  "/about", "/contact", "/estimate", "/privacy", "/terms", "/hero-concepts?c=stills"];
+  "/roof-inspection", "/about", "/contact", "/estimate", "/privacy", "/terms", "/hero-concepts?c=stills"];
 (async () => {
   const b = await chromium.launch();
   let failures = 0;
