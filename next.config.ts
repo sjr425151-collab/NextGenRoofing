@@ -18,7 +18,11 @@ const nextConfig: NextConfig = {
   ...(process.env.NEXT_BUILD_CPUS ? { experimental: { cpus: Number(process.env.NEXT_BUILD_CPUS), workerThreads: false } } : {}),
   reactStrictMode: true,
   images: {
-    formats: ["image/avif", "image/webp"],
+    // Memory (Render 512 MB): on-demand AVIF encoding (libaom) drove the server to ~850 MB RSS under a
+    // cold-cache burst and the memory was never returned. WebP-only keeps the peak around ~300 MB.
+    // Next encodes AVIF at quality×50/80 to match WebP at the same quality; measured SSIM confirms WebP
+    // at the same requested quality is equal or better than the AVIF previously served (no visual downgrade).
+    formats: ["image/webp"],
     deviceSizes: [390, 640, 828, 1080, 1280, 1600, 1920],
     imageSizes: [96, 160, 256, 384],
     qualities: [60, 70, 75, 80],

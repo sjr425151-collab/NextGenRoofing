@@ -8,7 +8,9 @@ services:
     branch: claude/nextgen-roofing-website-k8ccjl
     # build:render = webpack, 1 worker, capped heap (~440 MB peak measured) to fit 512 MB instances
     buildCommand: npm ci && npm run build:render
-    startCommand: npm run start:live -- -p $PORT -H 0.0.0.0
+    # Runs Next directly (no npm/wrapper processes resident). MALLOC_ARENA_MAX=2 limits glibc
+    # allocator fragmentation from native image processing (measured: lower, stable RSS).
+    startCommand: MALLOC_ARENA_MAX=2 node scripts/with-env.cjs .env.live start -p $PORT -H 0.0.0.0
     healthCheckPath: /
     autoDeploy: true
     envVars:
@@ -16,6 +18,8 @@ services:
         value: "22"
       - key: NEXT_TELEMETRY_DISABLED
         value: "1"
+      - key: MALLOC_ARENA_MAX
+        value: "2"
       - key: LEAD_SINKS
         value: google-sheet
       # Secrets: set in the Render dashboard (never committed)
