@@ -7,6 +7,7 @@ export function PageHero({
   lede,
   image,
   imageAlt,
+  imagePosition,
   crumbs,
   children,
 }: {
@@ -15,12 +16,13 @@ export function PageHero({
   lede?: React.ReactNode;
   image: string;
   imageAlt: string;
+  imagePosition?: string;
   crumbs?: { href: string; label: string }[];
   children?: React.ReactNode;
 }) {
   return (
     <section className="on-dark relative isolate flex min-h-[78svh] items-end overflow-hidden bg-ink pb-16 pt-36 text-white sm:min-h-[72vh] sm:pb-20">
-      <Image src={image} alt={imageAlt} fill priority fetchPriority="high" loading="eager" sizes="100vw" className="cine-kenburns -z-20 object-cover" />
+      <Image src={image} alt={imageAlt} fill priority fetchPriority="high" loading="eager" sizes="100vw" className="cine-kenburns -z-20 object-cover" style={imagePosition ? { objectPosition: imagePosition } : undefined} />
       <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(17_18_20/0.55)_0%,rgb(17_18_20/0.25)_35%,rgb(17_18_20/0.9)_100%)]" aria-hidden />
       <div className="arch-lines-dark absolute inset-0 -z-10" aria-hidden />
       <div className="container-x">

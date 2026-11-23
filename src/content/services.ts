@@ -13,6 +13,10 @@ export type Service = {
   metaDescription: string;
   image: string;
   imageAlt: string;
+  /** CSS object-position for crops (default center). */
+  imagePosition?: string;
+  /** When true, the page shows only its own image (no project thumbnails; CTA uses the same image). */
+  singleImage?: boolean;
   offerings: { title: string; body: string }[];
   systems?: System[];
   process: { title: string; body: string }[];
@@ -71,8 +75,10 @@ export const services: Service[] = [
     lede: "Installation, replacement, restoration and maintenance of flat and low-slope commercial roof systems.",
     metaTitle: "Commercial Roofing in Toledo, OH",
     metaDescription: "Commercial flat and low-slope roofing in Toledo, Ohio — EPDM, TPO, modified bitumen, spray foam and roof coatings. Free inspections.",
-    image: "/media/stills/replacement-complete.jpg",
-    imageAlt: "Top-down aerial view of a completed roof with the job site organized around it",
+    image: "/media/photos/commercial-roof.jpg",
+    imageAlt: "Roofing crew in safety harnesses walking across a white membrane roof on a commercial building",
+    imagePosition: "50% 40%",
+    singleImage: true,
     offerings: [
       { title: "New commercial roofs", body: "Membrane and foam systems specified to the building's slope, drainage, insulation needs and budget." },
       { title: "Replacement & overlay", body: "Full tear-off where the existing roof is failing, or a recover over a sound substrate where it makes sense." },

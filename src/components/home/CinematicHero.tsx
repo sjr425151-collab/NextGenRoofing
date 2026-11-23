@@ -36,11 +36,10 @@ function ArtImage({
   );
 }
 
-type VideoSrc = { base: string };
+/** Each clip ships a desktop and a portrait-phone rendition. */
+type VideoSrc = { base: string; desktop: string; mobile: string };
 
-function pickVariant() {
-  return window.matchMedia("(max-width: 767px)").matches ? "540" : "1280";
-}
+const isPhone = () => window.matchMedia("(max-width: 767px)").matches;
 
 function shouldSkipVideo() {
   const c = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
@@ -55,6 +54,7 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
   const [paused, setPaused] = useState(false);
   const [scene, setScene] = useState(0);
   const [videoEnabled, setVideoEnabled] = useState(false);
+  const [arrivalEnded, setArrivalEnded] = useState(false);
   const pausedRef = useRef(false);
 
   // ── Video loading (after first paint; skipped on Save-Data / 2G / reduced motion)
@@ -74,19 +74,22 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
 
   useEffect(() => {
     if (!videoEnabled) return;
-    const v = pickVariant();
+    const phone = isPhone();
     const set = (el: HTMLVideoElement | null, src: VideoSrc, key: "a" | "b", autoplay: boolean) => {
       if (!el || el.dataset.loaded) return;
       el.dataset.loaded = "1";
+      const v = phone ? src.mobile : src.desktop;
       el.innerHTML = `<source src="${asset(src.base)}-${v}.webm" type='video/webm; codecs="av01.0.05M.08"'><source src="${asset(src.base)}-${v}.mp4" type="video/mp4">`;
       el.load();
       el.addEventListener("playing", () => setVideoReady((s) => ({ ...s, [key]: true })), { once: true });
+      if (key === "a") el.addEventListener("ended", () => setArrivalEnded(true), { once: true });
       if (autoplay && !pausedRef.current) el.play().catch(() => {});
     };
-    set(vidA.current, { base: "/media/video/hero-arrival" }, "a", true);
+    // Scene 1: Drone 1 push-in (1080p source, half speed). Plays once and holds on its last frame.
+    set(vidA.current, { base: "/media/video/hero-arrival-v2", desktop: "1600", mobile: "720" }, "a", true);
     // Scene 2 footage loads only once the visitor starts scrolling.
     const onScroll = () => {
-      set(vidB.current, { base: "/media/video/hero-detail" }, "b", false);
+      set(vidB.current, { base: "/media/video/hero-detail", desktop: "1280", mobile: "540" }, "b", false);
       window.removeEventListener("scroll", onScroll);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -97,7 +100,8 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
   const syncPlayback = useCallback((activeScene: number) => {
     const a = vidA.current, b = vidB.current;
     if (pausedRef.current) { a?.pause(); b?.pause(); return; }
-    if (a?.dataset.loaded) (activeScene === 0 ? a.play().catch(() => {}) : a.pause());
+    // Scene 1 is a one-shot arrival: once it has finished it stays on its final frame.
+    if (a?.dataset.loaded && !a.ended) (activeScene === 0 ? a.play().catch(() => {}) : a.pause());
     if (b?.dataset.loaded) (activeScene === 1 ? b.play().catch(() => {}) : b.pause());
   }, []);
 
@@ -185,7 +189,7 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
         {/* ── Layer A: arrival */}
         <div data-layer="a" className="absolute inset-0 will-change-transform">
           {concept === "video" ? (
-            <ArtImage desktop="/media/stills/hero-arrival-poster.jpg" mobile="/media/stills/hero-arrival-poster-540.jpg" alt="" priority className="cine-kenburns" />
+            <ArtImage desktop="/media/stills/hero-arrival-v2-poster.jpg" mobile="/media/stills/hero-arrival-v2-poster-720.jpg" alt="" priority className="cine-kenburns" />
           ) : (
             <ArtImage desktop={stillsA.desktop} alt="" priority className="cine-kenburns" />
           )}
@@ -194,7 +198,6 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
               ref={vidA}
               muted
               playsInline
-              loop
               preload="none"
               aria-hidden
               tabIndex={-1}
@@ -323,11 +326,11 @@ export function CinematicHero({ concept = "video" }: { concept?: HeroConcept }) 
             type="button"
             onClick={togglePause}
             className={`absolute right-4 top-[5.5rem] z-20 inline-flex h-10 w-10 items-center justify-center rounded-full border backdrop-blur transition-opacity duration-500 md:right-8 lg:top-28 ${
-              scene === 2 ? "pointer-events-none opacity-0" : "opacity-100"
+              scene === 2 || (scene === 0 && arrivalEnded) ? "pointer-events-none opacity-0" : "opacity-100"
             } border-white/30 bg-black/20 text-white hover:bg-black/40`}
             aria-label={paused ? "Play background video" : "Pause background video"}
             aria-pressed={paused}
-            tabIndex={scene === 2 ? -1 : 0}
+            tabIndex={scene === 2 || (scene === 0 && arrivalEnded) ? -1 : 0}
           >
             {paused ? <Play className="h-3.5 w-3.5" /> : <Pause className="h-3.5 w-3.5" />}
           </button>

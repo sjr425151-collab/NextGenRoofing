@@ -19,7 +19,8 @@ export function serviceMetadata(slug: ServiceSlug) {
 export function ServicePage({ slug }: { slug: ServiceSlug }) {
   const s = getService(slug);
   const others = services.filter((x) => x.slug !== slug);
-  const related = projects.slice(0, 2);
+  // Single-image pages (commercial) show no residential project thumbnails.
+  const related = s.singleImage ? [] : projects.slice(0, 2);
 
   return (
     <>
@@ -50,7 +51,7 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
           ],
         }}
       />
-      <PageHero eyebrow={s.eyebrow} title={s.headline} lede={s.lede} image={s.image} imageAlt={s.imageAlt} crumbs={[{ href: `/${slug}`, label: s.title }]}>
+      <PageHero eyebrow={s.eyebrow} title={s.headline} lede={s.lede} image={s.image} imageAlt={s.imageAlt} imagePosition={s.imagePosition} crumbs={[{ href: `/${slug}`, label: s.title }]}>
         <div className="flex flex-col gap-3 xs:flex-row">
           <Link href="#estimate" className="btn">Get a ballpark estimate <ArrowRight className="btn-arrow h-4 w-4" /></Link>
           <a href={`tel:${business.phone.e164}`} className="btn btn-ghost text-white"><Phone /> {business.phone.display}</a>
@@ -173,7 +174,7 @@ export function ServicePage({ slug }: { slug: ServiceSlug }) {
         </ul>
       </nav>
 
-      <FinalCta />
+      {s.singleImage ? <FinalCta image={s.image} imagePosition={s.imagePosition} /> : <FinalCta />}
     </>
   );
 }

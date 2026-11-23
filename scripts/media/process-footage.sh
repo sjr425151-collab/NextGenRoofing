@@ -58,7 +58,7 @@ loop() { # src start len xfade out_base
 }
 
 # 2) Hero loops
-loop "$RAW/master_d1.mkv" 5.2 6.8 0.8 hero-arrival   # sunny hip-roof orbit
+# (v1 hero-arrival from d1 retired Nov 23 2026 — replaced by Drone 1, see step 5)
 loop "$RAW/master_d3.mkv" 10.4 6.0 0.8 hero-detail   # ridge-cap close-up, overcast
 
 # 3) Project showcase films (full authentic edits, 720p)
@@ -88,3 +88,18 @@ still "$M/master_d3.mkv" 13.5 farmhouse-ridge-vent
 still "$M/master_d3.mkv" 21.0 farmhouse-top-down
 echo "done"
 ls -la "$OUT/video" "$OUT/stills"
+
+# 5) Hero Scene 1 (v2, Nov 23 2026): "Drone 1.MOV" — native 1920x1080 H.264, 3.37 s smooth push-in.
+#    Slowed to half speed with motion-compensated interpolation (checked frame-by-frame: no warping
+#    on siding or tree edges), lightly graded, plays once and holds on its final frame.
+if [ -f "$RAW/drone1.mov" ]; then
+  G_V2="eq=contrast=1.07:brightness=-0.01:saturation=1.0:gamma=0.97,curves=master='0/0.015 0.25/0.22 0.5/0.5 0.78/0.81 1/0.98',colorbalance=rm=0.015:bm=-0.01:rh=0.015"
+  ffmpeg -v error -y -i "$RAW/drone1.mov" -an -vf "setpts=2.0*PTS,minterpolate=fps=30:mi_mode=mci:mc_mode=aobmc:me_mode=bidir:vsbmc=1,hqdn3d=1:1:3:3,$G_V2,cas=0.25" -c:v libx264 -preset medium -crf 10 -pix_fmt yuv420p "$RAW/master_hero_v2.mkv"
+  M2="$RAW/master_hero_v2.mkv"
+  ffmpeg -v error -y -i "$M2" -vf scale=1600:900:flags=lanczos -c:v libsvtav1 -preset 5 -crf 40 -pix_fmt yuv420p -an -r 30 "$OUT/video/hero-arrival-v2-1600.webm"
+  ffmpeg -v error -y -i "$M2" -vf scale=1600:900:flags=lanczos $X264 -crf 26 -r 30 "$OUT/video/hero-arrival-v2-1600.mp4"
+  ffmpeg -v error -y -i "$M2" -vf "crop=810:1080:(iw-810)/2:0,scale=720:960:flags=lanczos" -c:v libsvtav1 -preset 6 -crf 36 -pix_fmt yuv420p -an -r 30 "$OUT/video/hero-arrival-v2-720.webm"
+  ffmpeg -v error -y -i "$M2" -vf "crop=810:1080:(iw-810)/2:0,scale=720:960:flags=lanczos" $X264 -crf 25 -r 30 "$OUT/video/hero-arrival-v2-720.mp4"
+  ffmpeg -v error -y -i "$M2" -frames:v 1 -vf scale=1600:900 -q:v 3 "$OUT/stills/hero-arrival-v2-poster.jpg"
+  ffmpeg -v error -y -i "$M2" -frames:v 1 -vf "crop=810:1080:(iw-810)/2:0,scale=720:960:flags=lanczos" -q:v 3 "$OUT/stills/hero-arrival-v2-poster-720.jpg"
+fi

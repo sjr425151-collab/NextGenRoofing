@@ -4,7 +4,7 @@ test("hero video loads after first paint and plays", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("h1")).toContainText("Raising the");
   const v = page.locator("[data-layer=a] video");
-  await expect.poll(async () => v.evaluate((el: HTMLVideoElement) => el.currentSrc), { timeout: 15000 }).toMatch(/hero-arrival-1280\.(webm|mp4)/);
+  await expect.poll(async () => v.evaluate((el: HTMLVideoElement) => el.currentSrc), { timeout: 15000 }).toMatch(/hero-arrival-v2-1600\.(webm|mp4)/);
   await expect.poll(async () => v.evaluate((el: HTMLVideoElement) => !el.paused && el.readyState >= 2), { timeout: 15000 }).toBe(true);
   await page.getByRole("button", { name: "Pause background video" }).click();
   expect(await v.evaluate((el: HTMLVideoElement) => el.paused)).toBe(true);

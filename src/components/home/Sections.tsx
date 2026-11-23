@@ -104,7 +104,7 @@ export function ServicesShowcase() {
             <li key={s.slug} data-reveal style={{ ["--reveal-delay" as string]: `${(i % 2) * 90}ms` }} className="bg-ink">
               <Link href={`/${s.slug}`} className="group relative block overflow-hidden">
                 <div className="zoom-media relative aspect-[16/10]">
-                  <Image src={s.image} alt={s.imageAlt} fill sizes="(min-width:640px) 50vw, 100vw" className="object-cover opacity-85 transition-opacity duration-700 group-hover:opacity-100" />
+                  <Image src={s.image} alt={s.imageAlt} fill sizes="(min-width:640px) 50vw, 100vw" className="object-cover opacity-85 transition-opacity duration-700 group-hover:opacity-100" style={s.imagePosition ? { objectPosition: s.imagePosition } : undefined} />
                   <div className="absolute inset-0 bg-gradient-to-t from-ink/95 via-ink/30 to-transparent" aria-hidden />
                 </div>
                 <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-6 p-6 sm:p-8">
@@ -334,10 +334,10 @@ export function ReviewsTrust() {
 }
 
 /* 10 — Final CTA */
-export function FinalCta({ title = "Your roof deserves a higher standard." }: { title?: string }) {
+export function FinalCta({ title = "Your roof deserves a higher standard.", image = "/media/stills/hip-roof-ridge-lines.jpg", imagePosition }: { title?: string; image?: string; imagePosition?: string }) {
   return (
     <section aria-labelledby="cta-h" className="on-dark relative isolate overflow-hidden bg-ink py-28 text-white sm:py-36">
-      <Image src="/media/stills/hip-roof-ridge-lines.jpg" alt="" fill sizes="100vw" className="-z-10 object-cover opacity-60" />
+      <Image src={image} alt="" fill sizes="100vw" className="-z-10 object-cover opacity-60" style={imagePosition ? { objectPosition: imagePosition } : undefined} />
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/75 to-ink/20" aria-hidden />
       <div className="container-x">
         <p data-reveal className="eyebrow text-mist">Free inspection</p>
